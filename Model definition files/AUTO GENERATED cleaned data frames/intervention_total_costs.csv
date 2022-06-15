@@ -1,0 +1,1009 @@
+"year","country","Name","c_inter_month"
+"year_1","Afghanistan","anx_trt_cbt_group",0.0413821402439135
+"year_other","Afghanistan","anx_trt_cbt_group",0.041085952305069
+"year_1","Algeria","anx_trt_cbt_group",0.0606258732717947
+"year_other","Algeria","anx_trt_cbt_group",0.0601935379507764
+"year_1","Argentina","anx_trt_cbt_group",0.0550538280046957
+"year_other","Argentina","anx_trt_cbt_group",0.0547864446369329
+"year_1","Bangladesh","anx_trt_cbt_group",0.0331854679646544
+"year_other","Bangladesh","anx_trt_cbt_group",0.0329488157043014
+"year_1","Brazil","anx_trt_cbt_group",1.14795339673198
+"year_other","Brazil","anx_trt_cbt_group",1.13976710969797
+"year_1","China","anx_trt_cbt_group",0.364271125654393
+"year_other","China","anx_trt_cbt_group",0.361673434841076
+"year_1","Colombia","anx_trt_cbt_group",0.00151197046901999
+"year_other","Colombia","anx_trt_cbt_group",0.00150118830287842
+"year_1","Democratic Republic of the Congo","anx_trt_cbt_group",0.000394934995162104
+"year_other","Democratic Republic of the Congo","anx_trt_cbt_group",0.000392118634115241
+"year_1","Egypt","anx_trt_cbt_group",0.520158162275214
+"year_other","Egypt","anx_trt_cbt_group",0.516448809585821
+"year_1","Ethiopia","anx_trt_cbt_group",0.0595556538968379
+"year_other","Ethiopia","anx_trt_cbt_group",0.0591309505258776
+"year_1","France","anx_trt_cbt_group",20.6485168843573
+"year_other","France","anx_trt_cbt_group",20.5012681488921
+"year_1","Germany","anx_trt_cbt_group",18.0456304662112
+"year_other","Germany","anx_trt_cbt_group",17.9169434383871
+"year_1","India","anx_trt_cbt_group",0.0573898197953514
+"year_other","India","anx_trt_cbt_group",0.0569805614238774
+"year_1","Indonesia","anx_trt_cbt_group",0.000212441098054391
+"year_other","Indonesia","anx_trt_cbt_group",0.000210926137768161
+"year_1","Iran (Islamic Republic of)","anx_trt_cbt_group",0.000380351164034196
+"year_other","Iran (Islamic Republic of)","anx_trt_cbt_group",0.000377638803226374
+"year_1","Iraq","anx_trt_cbt_group",0.00528178555387821
+"year_other","Iraq","anx_trt_cbt_group",0.00524412007658688
+"year_1","Italy","anx_trt_cbt_group",18.7861250009284
+"year_other","Italy","anx_trt_cbt_group",18.6521573573358
+"year_1","Japan","anx_trt_cbt_group",0.153235070884306
+"year_other","Japan","anx_trt_cbt_group",0.152142320710383
+"year_1","Kenya","anx_trt_cbt_group",0.053397009645982
+"year_other","Kenya","anx_trt_cbt_group",0.0530162248084059
+"year_1","Mexico","anx_trt_cbt_group",0.318671294047983
+"year_other","Mexico","anx_trt_cbt_group",0.316398784824176
+"year_1","Morocco","anx_trt_cbt_group",0.497404561870846
+"year_other","Morocco","anx_trt_cbt_group",0.493857469691764
+"year_1","Mozambique","anx_trt_cbt_group",0.0325366466610553
+"year_other","Mozambique","anx_trt_cbt_group",0.0323046212761837
+"year_1","Nigeria","anx_trt_cbt_group",0.0202453369313827
+"year_other","Nigeria","anx_trt_cbt_group",0.0201009633534202
+"year_1","Pakistan","anx_trt_cbt_group",0.0342466248234957
+"year_other","Pakistan","anx_trt_cbt_group",0.0340024052397137
+"year_1","Philippines","anx_trt_cbt_group",0.0660342064246049
+"year_other","Philippines","anx_trt_cbt_group",0.0655633031898626
+"year_1","Russian Federation","anx_trt_cbt_group",0.132780591680381
+"year_other","Russian Federation","anx_trt_cbt_group",0.131833706520117
+"year_1","South Africa","anx_trt_cbt_group",0.472275080512035
+"year_other","South Africa","anx_trt_cbt_group",0.468907191729192
+"year_1","Sudan","anx_trt_cbt_group",0.124382081898477
+"year_other","Sudan","anx_trt_cbt_group",0.123495088204128
+"year_1","Thailand","anx_trt_cbt_group",0.0957610809779563
+"year_other","Thailand","anx_trt_cbt_group",0.0950781894095322
+"year_1","Turkey","anx_trt_cbt_group",0.649746851541435
+"year_other","Turkey","anx_trt_cbt_group",0.645113375791198
+"year_1","Uganda","anx_trt_cbt_group",0.000884234497791044
+"year_other","Uganda","anx_trt_cbt_group",0.00087792884337607
+"year_1","United Kingdom","anx_trt_cbt_group",18.1244519530745
+"year_other","United Kingdom","anx_trt_cbt_group",17.9952028333417
+"year_1","United Republic of Tanzania","anx_trt_cbt_group",0.00140129813873499
+"year_other","United Republic of Tanzania","anx_trt_cbt_group",0.00139130519928591
+"year_1","United States of America","anx_trt_cbt_group",18.4846331620884
+"year_other","United States of America","anx_trt_cbt_group",18.3528155175621
+"year_1","Viet Nam","anx_trt_cbt_group",8.89813669333568e-05
+"year_other","Viet Nam","anx_trt_cbt_group",8.83468228721882e-05
+"year_1","Yemen","anx_trt_cbt_group",0.0131496862518293
+"year_other","Yemen","anx_trt_cbt_group",0.013055913188941
+"year_1","Afghanistan","anx_trt_cbt_internet_individual",1.33248569744409
+"year_other","Afghanistan","anx_trt_cbt_internet_individual",1.32952381805564
+"year_1","Algeria","anx_trt_cbt_internet_individual",1.74648038829493
+"year_other","Algeria","anx_trt_cbt_internet_individual",1.74215703508474
+"year_1","Argentina","anx_trt_cbt_internet_individual",2.53432896471091
+"year_other","Argentina","anx_trt_cbt_internet_individual",2.53165513103329
+"year_1","Bangladesh","anx_trt_cbt_internet_individual",1.11058730890897
+"year_other","Bangladesh","anx_trt_cbt_internet_individual",1.10822078630544
+"year_1","Brazil","anx_trt_cbt_internet_individual",12.4531163186504
+"year_other","Brazil","anx_trt_cbt_internet_individual",12.3712534483104
+"year_1","China","anx_trt_cbt_internet_individual",4.45898485764352
+"year_other","China","anx_trt_cbt_internet_individual",4.43300794951034
+"year_1","Colombia","anx_trt_cbt_internet_individual",1.24328538935416
+"year_other","Colombia","anx_trt_cbt_internet_individual",1.24317756769274
+"year_1","Democratic Republic of the Congo","anx_trt_cbt_internet_individual",2.79903781116117
+"year_other","Democratic Republic of the Congo","anx_trt_cbt_internet_individual",2.7990096475507
+"year_1","Egypt","anx_trt_cbt_internet_individual",6.12566258442375
+"year_other","Egypt","anx_trt_cbt_internet_individual",6.08856905752982
+"year_1","Ethiopia","anx_trt_cbt_internet_individual",2.99252000017792
+"year_other","Ethiopia","anx_trt_cbt_internet_individual",2.98827296646832
+"year_1","France","anx_trt_cbt_internet_individual",208.288327723529
+"year_other","France","anx_trt_cbt_internet_individual",206.815840368876
+"year_1","Germany","anx_trt_cbt_internet_individual",182.194463542068
+"year_other","Germany","anx_trt_cbt_internet_individual",180.907593263827
+"year_1","India","anx_trt_cbt_internet_individual",1.3580474938826
+"year_other","India","anx_trt_cbt_internet_individual",1.35395491016786
+"year_1","Indonesia","anx_trt_cbt_internet_individual",1.24059745621653
+"year_other","Indonesia","anx_trt_cbt_internet_individual",1.24058230661367
+"year_1","Iran (Islamic Republic of)","anx_trt_cbt_internet_individual",0.95827725170583
+"year_other","Iran (Islamic Republic of)","anx_trt_cbt_internet_individual",0.958250128097752
+"year_1","Iraq","anx_trt_cbt_internet_individual",1.35606548387707
+"year_other","Iraq","anx_trt_cbt_internet_individual",1.35568882910415
+"year_1","Italy","anx_trt_cbt_internet_individual",189.277117222573
+"year_other","Italy","anx_trt_cbt_internet_individual",187.937440786647
+"year_1","Japan","anx_trt_cbt_internet_individual",3.10530125546526
+"year_other","Japan","anx_trt_cbt_internet_individual",3.09437375372602
+"year_1","Kenya","anx_trt_cbt_internet_individual",1.9667668910027
+"year_other","Kenya","anx_trt_cbt_internet_individual",1.96295904262694
+"year_1","Mexico","anx_trt_cbt_internet_individual",4.35529529181046
+"year_other","Mexico","anx_trt_cbt_internet_individual",4.33257019957238
+"year_1","Morocco","anx_trt_cbt_internet_individual",6.35583491371341
+"year_other","Morocco","anx_trt_cbt_internet_individual",6.32036399192259
+"year_1","Mozambique","anx_trt_cbt_internet_individual",1.3817049278201
+"year_other","Mozambique","anx_trt_cbt_internet_individual",1.37938467397138
+"year_1","Nigeria","anx_trt_cbt_internet_individual",2.08746669155747
+"year_other","Nigeria","anx_trt_cbt_internet_individual",2.08602295577785
+"year_1","Pakistan","anx_trt_cbt_internet_individual",1.69175554323991
+"year_other","Pakistan","anx_trt_cbt_internet_individual",1.68931334740209
+"year_1","Philippines","anx_trt_cbt_internet_individual",1.71494899867897
+"year_other","Philippines","anx_trt_cbt_internet_individual",1.71023996633155
+"year_1","Russian Federation","anx_trt_cbt_internet_individual",2.1851553516988
+"year_other","Russian Federation","anx_trt_cbt_internet_individual",2.17568650009616
+"year_1","South Africa","anx_trt_cbt_internet_individual",6.33158926632989
+"year_other","South Africa","anx_trt_cbt_internet_individual",6.29791037850147
+"year_1","Sudan","anx_trt_cbt_internet_individual",2.64456844732305
+"year_other","Sudan","anx_trt_cbt_internet_individual",2.63569851037956
+"year_1","Thailand","anx_trt_cbt_internet_individual",2.20962552168222
+"year_other","Thailand","anx_trt_cbt_internet_individual",2.20279660599797
+"year_1","Turkey","anx_trt_cbt_internet_individual",7.77205156157447
+"year_other","Turkey","anx_trt_cbt_internet_individual",7.7257168040721
+"year_1","Uganda","anx_trt_cbt_internet_individual",2.51955580618746
+"year_other","Uganda","anx_trt_cbt_internet_individual",2.51949274964331
+"year_1","United Kingdom","anx_trt_cbt_internet_individual",183.055803410701
+"year_other","United Kingdom","anx_trt_cbt_internet_individual",181.763312213373
+"year_1","United Republic of Tanzania","anx_trt_cbt_internet_individual",1.2816014425969
+"year_other","United Republic of Tanzania","anx_trt_cbt_internet_individual",1.28150151320241
+"year_1","United States of America","anx_trt_cbt_internet_individual",186.655840222907
+"year_other","United States of America","anx_trt_cbt_internet_individual",185.337663777645
+"year_1","Viet Nam","anx_trt_cbt_internet_individual",0.892996748102255
+"year_other","Viet Nam","anx_trt_cbt_internet_individual",0.892990402661643
+"year_1","Yemen","anx_trt_cbt_internet_individual",1.65953615752324
+"year_other","Yemen","anx_trt_cbt_internet_individual",1.65859842689436
+"year_1","Afghanistan","anx_trt_cbt_internet_self",0.539975024237377
+"year_other","Afghanistan","anx_trt_cbt_internet_self",0.538628715424447
+"year_1","Algeria","anx_trt_cbt_internet_self",0.632467966362201
+"year_other","Algeria","anx_trt_cbt_internet_self",0.630502805812118
+"year_1","Argentina","anx_trt_cbt_internet_self",0.567563646769809
+"year_other","Argentina","anx_trt_cbt_internet_self",0.566348267825432
+"year_1","Bangladesh","anx_trt_cbt_internet_self",0.466088843767587
+"year_other","Bangladesh","anx_trt_cbt_internet_self",0.465013151675074
+"year_1","Brazil","anx_trt_cbt_internet_self",5.64438218463484
+"year_other","Brazil","anx_trt_cbt_internet_self",5.60717178902573
+"year_1","China","anx_trt_cbt_internet_self",2.05874225050323
+"year_other","China","anx_trt_cbt_internet_self",2.04693456498815
+"year_1","Colombia","anx_trt_cbt_internet_self",0.315452985102521
+"year_other","Colombia","anx_trt_cbt_internet_self",0.315403975256423
+"year_1","Democratic Republic of the Congo","anx_trt_cbt_internet_self",0.349272569561063
+"year_other","Democratic Republic of the Congo","anx_trt_cbt_internet_self",0.349259767919941
+"year_1","Egypt","anx_trt_cbt_internet_self",2.7529970651942
+"year_other","Egypt","anx_trt_cbt_internet_self",2.7361363711515
+"year_1","Ethiopia","anx_trt_cbt_internet_self",0.654998643931019
+"year_other","Ethiopia","anx_trt_cbt_internet_self",0.653068174063018
+"year_1","France","anx_trt_cbt_internet_self",93.8421420243709
+"year_other","France","anx_trt_cbt_internet_self",93.1728295904378
+"year_1","Germany","anx_trt_cbt_internet_self",82.1162538702623
+"year_other","Germany","anx_trt_cbt_internet_self",81.5313128346983
+"year_1","India","anx_trt_cbt_internet_self",0.581649489477988
+"year_other","India","anx_trt_cbt_internet_self",0.579789224153106
+"year_1","Indonesia","anx_trt_cbt_internet_self",0.326386892313714
+"year_other","Indonesia","anx_trt_cbt_internet_self",0.326380006130594
+"year_1","Iran (Islamic Republic of)","anx_trt_cbt_internet_self",0.314959072492993
+"year_other","Iran (Islamic Republic of)","anx_trt_cbt_internet_self",0.31494674358023
+"year_1","Iraq","anx_trt_cbt_internet_self",0.357035228726335
+"year_other","Iraq","anx_trt_cbt_internet_self",0.356864022011374
+"year_1","Italy","anx_trt_cbt_internet_self",85.4957203280858
+"year_other","Italy","anx_trt_cbt_internet_self",84.886776493574
+"year_1","Japan","anx_trt_cbt_internet_self",0.975721230553847
+"year_other","Japan","anx_trt_cbt_internet_self",0.97075418430874
+"year_1","Kenya","anx_trt_cbt_internet_self",0.598067642214026
+"year_other","Kenya","anx_trt_cbt_internet_self",0.596336802043225
+"year_1","Mexico","anx_trt_cbt_internet_self",1.78913902410323
+"year_other","Mexico","anx_trt_cbt_internet_self",1.77880943672229
+"year_1","Morocco","anx_trt_cbt_internet_self",2.6737983793584
+"year_other","Morocco","anx_trt_cbt_internet_self",2.65767523308984
+"year_1","Mozambique","anx_trt_cbt_internet_self",0.514016251941232
+"year_other","Mozambique","anx_trt_cbt_internet_self",0.512961591100907
+"year_1","Nigeria","anx_trt_cbt_internet_self",0.444172031346243
+"year_other","Nigeria","anx_trt_cbt_internet_self",0.44351578781005
+"year_1","Pakistan","anx_trt_cbt_internet_self",0.495775143516236
+"year_other","Pakistan","anx_trt_cbt_internet_self",0.494665054499045
+"year_1","Philippines","anx_trt_cbt_internet_self",0.632807047830974
+"year_other","Philippines","anx_trt_cbt_internet_self",0.630666578582146
+"year_1","Russian Federation","anx_trt_cbt_internet_self",0.91615060661315
+"year_other","Russian Federation","anx_trt_cbt_internet_self",0.911846583157403
+"year_1","South Africa","anx_trt_cbt_internet_self",2.54056160369923
+"year_other","South Africa","anx_trt_cbt_internet_self",2.52525301832267
+"year_1","Sudan","anx_trt_cbt_internet_self",0.918728621669083
+"year_other","Sudan","anx_trt_cbt_internet_self",0.914696832149314
+"year_1","Thailand","anx_trt_cbt_internet_self",0.791557675702392
+"year_other","Thailand","anx_trt_cbt_internet_self",0.788453623118645
+"year_1","Turkey","anx_trt_cbt_internet_self",3.3855500176909
+"year_other","Turkey","anx_trt_cbt_internet_self",3.36448876428073
+"year_1","Uganda","anx_trt_cbt_internet_self",0.351486391371486
+"year_other","Uganda","anx_trt_cbt_internet_self",0.351457729305964
+"year_1","United Kingdom","anx_trt_cbt_internet_self",82.4882473369295
+"year_other","United Kingdom","anx_trt_cbt_internet_self",81.900751338144
+"year_1","United Republic of Tanzania","anx_trt_cbt_internet_self",0.353946002972711
+"year_other","United Republic of Tanzania","anx_trt_cbt_internet_self",0.35390058052067
+"year_1","United States of America","anx_trt_cbt_internet_self",83.9581604229194
+"year_other","United States of America","anx_trt_cbt_internet_self",83.3589893114363
+"year_1","Viet Nam","anx_trt_cbt_internet_self",0.316089454481162
+"year_other","Viet Nam","anx_trt_cbt_internet_self",0.316086570189974
+"year_1","Yemen","anx_trt_cbt_internet_self",0.395325474646272
+"year_other","Yemen","anx_trt_cbt_internet_self",0.394899233451325
+"year_1","Afghanistan","anxdep_prevention_school",0.000605647687922312
+"year_other","Afghanistan","anxdep_prevention_school",0.000561744649211201
+"year_1","Algeria","anxdep_prevention_school",0.456490905906584
+"year_other","Algeria","anxdep_prevention_school",0.456427112574207
+"year_1","Argentina","anxdep_prevention_school",0.00258295190768545
+"year_other","Argentina","anxdep_prevention_school",0.00256278109740773
+"year_1","Bangladesh","anxdep_prevention_school",0.0497601411689362
+"year_other","Bangladesh","anxdep_prevention_school",0.0497252218931599
+"year_1","Brazil","anxdep_prevention_school",0.468094723411506
+"year_other","Brazil","anxdep_prevention_school",0.466886794046718
+"year_1","China","anxdep_prevention_school",0.459731368434076
+"year_other","China","anxdep_prevention_school",0.459348065600812
+"year_1","Colombia","anxdep_prevention_school",0.455860050046388
+"year_other","Colombia","anxdep_prevention_school",0.455858459081517
+"year_1","Democratic Republic of the Congo","anxdep_prevention_school",0.000167759581047196
+"year_other","Democratic Republic of the Congo","anxdep_prevention_school",0.000167344012280035
+"year_1","Egypt","anxdep_prevention_school",0.0549570502443889
+"year_other","Egypt","anxdep_prevention_school",0.054409715901083
+"year_1","Ethiopia","anxdep_prevention_school",0.00079911505654405
+"year_other","Ethiopia","anxdep_prevention_school",0.000736447858218839
+"year_1","France","anxdep_prevention_school",9.14294730229983
+"year_other","France","anxdep_prevention_school",9.12121998309426
+"year_1","Germany","anxdep_prevention_school",8.28920002380723
+"year_other","Germany","anxdep_prevention_school",8.27021158141202
+"year_1","India","anxdep_prevention_school",0.0500184468545814
+"year_other","India","anxdep_prevention_school",0.0499580586465165
+"year_1","Indonesia","anxdep_prevention_school",0.0494082573270489
+"year_other","Indonesia","anxdep_prevention_school",0.0494080337867542
+"year_1","Iran (Islamic Republic of)","anxdep_prevention_school",0.455847973552768
+"year_other","Iran (Islamic Republic of)","anxdep_prevention_school",0.455847573329779
+"year_1","Iraq","anxdep_prevention_school",0.455900281021258
+"year_other","Iraq","anxdep_prevention_school",0.45589472328356
+"year_1","Italy","anxdep_prevention_school",8.80093680558009
+"year_other","Italy","anxdep_prevention_school",8.78116918077599
+"year_1","Japan","anxdep_prevention_school",4.27945949759255
+"year_other","Japan","anxdep_prevention_school",4.27929825660283
+"year_1","Kenya","anxdep_prevention_school",0.0499758361054691
+"year_other","Kenya","anxdep_prevention_school",0.0499196493158948
+"year_1","Mexico","anxdep_prevention_school",0.459244732978982
+"year_other","Mexico","anxdep_prevention_school",0.458909412385923
+"year_1","Morocco","anxdep_prevention_school",0.0547142267887368
+"year_other","Morocco","anxdep_prevention_school",0.0541908348303408
+"year_1","Mozambique","anxdep_prevention_school",0.000510771735545
+"year_other","Mozambique","anxdep_prevention_school",0.000476535179387333
+"year_1","Nigeria","anxdep_prevention_school",0.0496220457783936
+"year_other","Nigeria","anxdep_prevention_school",0.0496007427036791
+"year_1","Pakistan","anxdep_prevention_school",0.0497714656965218
+"year_other","Pakistan","anxdep_prevention_school",0.0497354298226903
+"year_1","Philippines","anxdep_prevention_school",0.0217436622086072
+"year_other","Philippines","anxdep_prevention_school",0.0216741779793277
+"year_1","Russian Federation","anxdep_prevention_school",0.0224559709259994
+"year_other","Russian Federation","anxdep_prevention_school",0.0223162530801172
+"year_1","South Africa","anxdep_prevention_school",0.460883972552833
+"year_other","South Africa","anxdep_prevention_school",0.460387022990567
+"year_1","Sudan","anxdep_prevention_school",0.0507333795376177
+"year_other","Sudan","anxdep_prevention_school",0.050602498990022
+"year_1","Thailand","anxdep_prevention_school",0.456865864260367
+"year_other","Thailand","anxdep_prevention_school",0.456765100046379
+"year_1","Turkey","anxdep_prevention_school",0.642835750335834
+"year_other","Turkey","anxdep_prevention_school",0.642152056813179
+"year_1","Uganda","anxdep_prevention_school",0.000172981321517525
+"year_other","Uganda","anxdep_prevention_school",0.000172050889308099
+"year_1","United Kingdom","anxdep_prevention_school",8.96453118016763
+"year_other","United Kingdom","anxdep_prevention_school",8.9454597981785
+"year_1","United Republic of Tanzania","anxdep_prevention_school",0.00017849935725054
+"year_other","United Republic of Tanzania","anxdep_prevention_school",0.000177024846895487
+"year_1","United States of America","anxdep_prevention_school",4.47508978696799
+"year_other","United States of America","anxdep_prevention_school",4.455639405744
+"year_1","Viet Nam","anxdep_prevention_school",0.0494069397809018
+"year_other","Viet Nam","anxdep_prevention_school",0.0494068461506148
+"year_1","Yemen","anxdep_prevention_school",0.000303876622793778
+"year_other","Yemen","anxdep_prevention_school",0.000290039918092574
+"year_1","Afghanistan","bip_trt_depressed",4.25568035957648
+"year_other","Afghanistan","bip_trt_depressed",4.22985129443929
+"year_1","Algeria","bip_trt_depressed",3.94434325414179
+"year_other","Algeria","bip_trt_depressed",3.90671540974099
+"year_1","Argentina","bip_trt_depressed",3.60443348039922
+"year_other","Argentina","bip_trt_depressed",3.59253593433462
+"year_1","Bangladesh","bip_trt_depressed",3.40831268721037
+"year_other","Bangladesh","bip_trt_depressed",3.38771590967046
+"year_1","Brazil","bip_trt_depressed",23.4068513266487
+"year_other","Brazil","bip_trt_depressed",22.6943665497622
+"year_1","China","bip_trt_depressed",11.0350770341264
+"year_other","China","bip_trt_depressed",10.8089897796899
+"year_1","Colombia","bip_trt_depressed",2.50623697068017
+"year_other","Colombia","bip_trt_depressed",2.50529855632873
+"year_1","Democratic Republic of the Congo","bip_trt_depressed",2.81642456189601
+"year_other","Democratic Republic of the Congo","bip_trt_depressed",2.81617944291059
+"year_1","Egypt","bip_trt_depressed",12.7360068874962
+"year_other","Egypt","bip_trt_depressed",12.4131673251504
+"year_1","Ethiopia","bip_trt_depressed",5.28923188368192
+"year_other","Ethiopia","bip_trt_depressed",5.25226827792944
+"year_1","France","bip_trt_depressed",250.579199775978
+"year_other","France","bip_trt_depressed",237.763562845706
+"year_1","Germany","bip_trt_depressed",222.417718417302
+"year_other","Germany","bip_trt_depressed",211.217579950794
+"year_1","India","bip_trt_depressed",3.96678873665513
+"year_other","India","bip_trt_depressed",3.93116936999019
+"year_1","Indonesia","bip_trt_depressed",2.61843860921266
+"year_other","Indonesia","bip_trt_depressed",2.61830675625697
+"year_1","Iran (Islamic Republic of)","bip_trt_depressed",2.52018644270584
+"year_other","Iran (Islamic Republic of)","bip_trt_depressed",2.51995037527051
+"year_1","Iraq","bip_trt_depressed",2.75849990475835
+"year_other","Iraq","bip_trt_depressed",2.75522173004095
+"year_1","Italy","bip_trt_depressed",232.974626568747
+"year_other","Italy","bip_trt_depressed",221.314895330567
+"year_1","Japan","bip_trt_depressed",4.09843431795206
+"year_other","Japan","bip_trt_depressed",4.00332796990604
+"year_1","Kenya","bip_trt_depressed",3.83277639269129
+"year_other","Kenya","bip_trt_depressed",3.79963518973625
+"year_1","Mexico","bip_trt_depressed",7.98070628517285
+"year_other","Mexico","bip_trt_depressed",7.78292086419121
+"year_1","Morocco","bip_trt_depressed",12.9354251492616
+"year_other","Morocco","bip_trt_depressed",12.6267077576882
+"year_1","Mozambique","bip_trt_depressed",3.97671429480285
+"year_other","Mozambique","bip_trt_depressed",3.95652021244469
+"year_1","Nigeria","bip_trt_depressed",3.16751173906556
+"year_other","Nigeria","bip_trt_depressed",3.15494633840765
+"year_1","Pakistan","bip_trt_depressed",3.57828378737214
+"year_other","Pakistan","bip_trt_depressed",3.55702839589375
+"year_1","Philippines","bip_trt_depressed",4.23934121363161
+"year_other","Philippines","bip_trt_depressed",4.19835665191921
+"year_1","Russian Federation","bip_trt_depressed",4.59756685104474
+"year_other","Russian Federation","bip_trt_depressed",4.5151557091747
+"year_1","South Africa","bip_trt_depressed",10.7660689830223
+"year_other","South Africa","bip_trt_depressed",10.4729483682608
+"year_1","Sudan","bip_trt_depressed",6.99847784528831
+"year_other","Sudan","bip_trt_depressed",6.92127929339377
+"year_1","Thailand","bip_trt_depressed",5.17767875465006
+"year_other","Thailand","bip_trt_depressed",5.11824401399837
+"year_1","Turkey","bip_trt_depressed",19.885781938246
+"year_other","Turkey","bip_trt_depressed",19.4825123091206
+"year_1","Uganda","bip_trt_depressed",2.81218408322694
+"year_other","Uganda","bip_trt_depressed",2.81163527730793
+"year_1","United Kingdom","bip_trt_depressed",225.460515546908
+"year_other","United Kingdom","bip_trt_depressed",214.211456009526
+"year_1","United Republic of Tanzania","bip_trt_depressed",2.82337159945005
+"year_other","United Republic of Tanzania","bip_trt_depressed",2.82250187460358
+"year_1","United States of America","bip_trt_depressed",220.266215023378
+"year_other","United States of America","bip_trt_depressed",208.793606665048
+"year_1","Viet Nam","bip_trt_depressed",2.53765831638018
+"year_other","Viet Nam","bip_trt_depressed",2.53760308951335
+"year_1","Yemen","bip_trt_depressed",3.01876888788986
+"year_other","Yemen","bip_trt_depressed",3.01060744919214
+"year_1","Afghanistan","bip_trt_euthymia",3.75827009194807
+"year_other","Afghanistan","bip_trt_euthymia",3.73244102681089
+"year_1","Algeria","bip_trt_euthymia",3.42151786334989
+"year_other","Algeria","bip_trt_euthymia",3.38389001894909
+"year_1","Argentina","bip_trt_euthymia",3.14333053157581
+"year_other","Argentina","bip_trt_euthymia",3.1314329855112
+"year_1","Bangladesh","bip_trt_euthymia",2.95447120214796
+"year_other","Bangladesh","bip_trt_euthymia",2.93387442460804
+"year_1","Brazil","bip_trt_euthymia",22.9457483778253
+"year_other","Brazil","bip_trt_euthymia",22.2332636009387
+"year_1","China","bip_trt_euthymia",10.5630818896614
+"year_other","China","bip_trt_euthymia",10.336994635225
+"year_1","Colombia","bip_trt_euthymia",2.04513402185676
+"year_other","Colombia","bip_trt_euthymia",2.04419560750532
+"year_1","Democratic Republic of the Congo","bip_trt_euthymia",2.29722990298461
+"year_other","Democratic Republic of the Congo","bip_trt_euthymia",2.29698478399919
+"year_1","Egypt","bip_trt_euthymia",12.2385966198678
+"year_other","Egypt","bip_trt_euthymia",11.915757057522
+"year_1","Ethiopia","bip_trt_euthymia",4.77003722477051
+"year_other","Ethiopia","bip_trt_euthymia",4.73307361901803
+"year_1","France","bip_trt_euthymia",250.15803487784
+"year_other","France","bip_trt_euthymia",237.342397947568
+"year_1","Germany","bip_trt_euthymia",221.996553519164
+"year_other","Germany","bip_trt_euthymia",210.796415052656
+"year_1","India","bip_trt_euthymia",3.51294725159271
+"year_other","India","bip_trt_euthymia",3.47732788492778
+"year_1","Indonesia","bip_trt_euthymia",2.13192053722575
+"year_other","Indonesia","bip_trt_euthymia",2.13178868427006
+"year_1","Iran (Islamic Republic of)","bip_trt_euthymia",2.05182203012143
+"year_other","Iran (Islamic Republic of)","bip_trt_euthymia",2.0515859626861
+"year_1","Iraq","bip_trt_euthymia",2.26108963712994
+"year_other","Iraq","bip_trt_euthymia",2.25781146241255
+"year_1","Italy","bip_trt_euthymia",232.553461670609
+"year_other","Italy","bip_trt_euthymia",220.893730432429
+"year_1","Japan","bip_trt_euthymia",3.67726941981414
+"year_other","Japan","bip_trt_euthymia",3.58216307176812
+"year_1","Kenya","bip_trt_euthymia",3.31358173377989
+"year_other","Kenya","bip_trt_euthymia",3.28044053082484
+"year_1","Mexico","bip_trt_euthymia",7.51960333634944
+"year_other","Mexico","bip_trt_euthymia",7.3218179153678
+"year_1","Morocco","bip_trt_euthymia",12.4380148816332
+"year_other","Morocco","bip_trt_euthymia",12.1292974900598
+"year_1","Mozambique","bip_trt_euthymia",3.45751963589145
+"year_other","Mozambique","bip_trt_euthymia",3.43732555353329
+"year_1","Nigeria","bip_trt_euthymia",2.64468634827366
+"year_other","Nigeria","bip_trt_euthymia",2.63212094761575
+"year_1","Pakistan","bip_trt_euthymia",3.08087351974374
+"year_other","Pakistan","bip_trt_euthymia",3.05961812826534
+"year_1","Philippines","bip_trt_euthymia",3.7673460691667
+"year_other","Philippines","bip_trt_euthymia",3.7263615074543
+"year_1","Russian Federation","bip_trt_euthymia",4.14735609786282
+"year_other","Russian Federation","bip_trt_euthymia",4.06494495599279
+"year_1","South Africa","bip_trt_euthymia",10.2468743241109
+"year_other","South Africa","bip_trt_euthymia",9.95375370934936
+"year_1","Sudan","bip_trt_euthymia",6.5010675776599
+"year_other","Sudan","bip_trt_euthymia",6.42386902576536
+"year_1","Thailand","bip_trt_euthymia",4.69116068266315
+"year_other","Thailand","bip_trt_euthymia",4.63172594201146
+"year_1","Turkey","bip_trt_euthymia",19.442832648825
+"year_other","Turkey","bip_trt_euthymia",19.0395630196997
+"year_1","Uganda","bip_trt_euthymia",2.29298942431553
+"year_other","Uganda","bip_trt_euthymia",2.29244061839652
+"year_1","United Kingdom","bip_trt_euthymia",225.03935064877
+"year_other","United Kingdom","bip_trt_euthymia",213.790291111388
+"year_1","United Republic of Tanzania","bip_trt_euthymia",2.30417694053864
+"year_other","United Republic of Tanzania","bip_trt_euthymia",2.30330721569217
+"year_1","United States of America","bip_trt_euthymia",219.837788661479
+"year_other","United States of America","bip_trt_euthymia",208.365180303149
+"year_1","Viet Nam","bip_trt_euthymia",2.06566317191527
+"year_other","Viet Nam","bip_trt_euthymia",2.06560794504844
+"year_1","Yemen","bip_trt_euthymia",2.52135862026145
+"year_other","Yemen","bip_trt_euthymia",2.51319718156373
+"year_1","Afghanistan","bip_trt_manic",7.58767307982209
+"year_other","Afghanistan","bip_trt_manic",7.5618440146849
+"year_1","Algeria","bip_trt_manic",5.40395713219778
+"year_other","Algeria","bip_trt_manic",5.36632928779698
+"year_1","Argentina","bip_trt_manic",6.30900693086802
+"year_other","Argentina","bip_trt_manic",6.29710938480341
+"year_1","Bangladesh","bip_trt_manic",5.22956010622335
+"year_other","Bangladesh","bip_trt_manic",5.20896332868344
+"year_1","Brazil","bip_trt_manic",48.1209477226748
+"year_other","Brazil","bip_trt_manic",47.4084629457882
+"year_1","China","bip_trt_manic",24.2494394368588
+"year_other","China","bip_trt_manic",24.0233521824224
+"year_1","Colombia","bip_trt_manic",2.60562060938714
+"year_other","Colombia","bip_trt_manic",2.6046821950357
+"year_1","Democratic Republic of the Congo","bip_trt_manic",2.95267084353503
+"year_other","Democratic Republic of the Congo","bip_trt_manic",2.95242572454961
+"year_1","Egypt","bip_trt_manic",25.6372731668121
+"year_other","Egypt","bip_trt_manic",25.3144336044662
+"year_1","Ethiopia","bip_trt_manic",10.6938482097758
+"year_other","Ethiopia","bip_trt_manic",10.6568846040233
+"year_1","France","bip_trt_manic",326.564859647308
+"year_other","France","bip_trt_manic",313.749222717035
+"year_1","Germany","bip_trt_manic",297.837800096056
+"year_other","Germany","bip_trt_manic",286.637661629548
+"year_1","India","bip_trt_manic",6.64382658929956
+"year_other","India","bip_trt_manic",6.60820722263463
+"year_1","Indonesia","bip_trt_manic",2.69152571763315
+"year_other","Indonesia","bip_trt_manic",2.69139386467746
+"year_1","Iran (Islamic Republic of)","bip_trt_manic",2.58355423685097
+"year_other","Iran (Islamic Republic of)","bip_trt_manic",2.58331816941564
+"year_1","Iraq","bip_trt_manic",2.91072814249678
+"year_other","Iraq","bip_trt_manic",2.90744996777938
+"year_1","Italy","bip_trt_manic",315.854360549369
+"year_other","Italy","bip_trt_manic",304.194629311189
+"year_1","Japan","bip_trt_manic",4.69912713358056
+"year_other","Japan","bip_trt_manic",4.60402078553454
+"year_1","Kenya","bip_trt_manic",5.25060996586194
+"year_other","Kenya","bip_trt_manic",5.2174687629069
+"year_1","Mexico","bip_trt_manic",14.0075474391853
+"year_other","Mexico","bip_trt_manic",13.8097620182037
+"year_1","Morocco","bip_trt_manic",27.109537158154
+"year_other","Morocco","bip_trt_manic",26.8008197665806
+"year_1","Mozambique","bip_trt_manic",6.4499715171303
+"year_other","Mozambique","bip_trt_manic",6.42977743477213
+"year_1","Nigeria","bip_trt_manic",3.64353880857747
+"year_other","Nigeria","bip_trt_manic",3.63097340791956
+"year_1","Pakistan","bip_trt_manic",5.18896484043915
+"year_other","Pakistan","bip_trt_manic",5.16770944896076
+"year_1","Philippines","bip_trt_manic",7.15443012342103
+"year_other","Philippines","bip_trt_manic",7.11344556170863
+"year_1","Russian Federation","bip_trt_manic",6.81621064168353
+"year_other","Russian Federation","bip_trt_manic",6.7337994998135
+"year_1","South Africa","bip_trt_manic",19.160905469816
+"year_other","South Africa","bip_trt_manic",18.8677848550544
+"year_1","Sudan","bip_trt_manic",15.6399733750633
+"year_other","Sudan","bip_trt_manic",15.5627748231687
+"year_1","Thailand","bip_trt_manic",9.645946452034
+"year_other","Thailand","bip_trt_manic",9.5865117113823
+"year_1","Turkey","bip_trt_manic",50.1288987340919
+"year_other","Turkey","bip_trt_manic",49.7256291049666
+"year_1","Uganda","bip_trt_manic",2.92119600721508
+"year_other","Uganda","bip_trt_manic",2.92064720129607
+"year_1","United Kingdom","bip_trt_manic",307.177753736913
+"year_other","United Kingdom","bip_trt_manic",295.928694199531
+"year_1","United Republic of Tanzania","bip_trt_manic",2.94853498787855
+"year_other","United Republic of Tanzania","bip_trt_manic",2.94766526303207
+"year_1","United States of America","bip_trt_manic",275.880936056114
+"year_other","United States of America","bip_trt_manic",264.408327697784
+"year_1","Viet Nam","bip_trt_manic",2.60466471205188
+"year_other","Viet Nam","bip_trt_manic",2.60460948518505
+"year_1","Yemen","bip_trt_manic",3.67494694713747
+"year_other","Yemen","bip_trt_manic",3.66678550843975
+"year_1","Afghanistan","dep_screening_school",1.53396309508807e-05
+"year_other","Afghanistan","dep_screening_school",0.000352137006166797
+"year_1","Algeria","dep_screening_school",0.0424042698935159
+"year_other","Algeria","dep_screening_school",0.0428977043780371
+"year_1","Argentina","dep_screening_school",0.000221303065475836
+"year_other","Argentina","dep_screening_school",0.000671689577657989
+"year_1","Bangladesh","dep_screening_school",0.00459600723289493
+"year_other","Bangladesh","dep_screening_school",0.00486610403142388
+"year_1","Brazil","dep_screening_school",0.0424075847237721
+"year_other","Brazil","dep_screening_school",0.0517507869244457
+"year_1","China","dep_screening_school",0.0424051955874288
+"year_other","China","dep_screening_school",0.0453700012951735
+"year_1","Colombia","dep_screening_school",0.0424040896786778
+"year_other","Colombia","dep_screening_school",0.0424163956188438
+"year_1","Democratic Republic of the Congo","dep_screening_school",1.52146817947389e-05
+"year_other","Democratic Republic of the Congo","dep_screening_school",1.84290609902935e-05
+"year_1","Egypt","dep_screening_school",0.00459749181944889
+"year_other","Egypt","dep_screening_school",0.00883106340894326
+"year_1","Ethiopia","dep_screening_school",1.53950393565283e-05
+"year_other","Ethiopia","dep_screening_school",0.000500118999523878
+"year_1","France","dep_screening_school",0.830071230382567
+"year_other","France","dep_screening_school",0.998129680267197
+"year_1","Germany","dep_screening_school",0.753228912503295
+"year_other","Germany","dep_screening_school",0.900102448279601
+"year_1","India","dep_screening_school",0.00459608102236135
+"year_other","India","dep_screening_school",0.00506317724084432
+"year_1","Indonesia","dep_screening_school",0.00459590671121702
+"year_other","Indonesia","dep_screening_school",0.00459763577107302
+"year_1","Iran (Islamic Republic of)","dep_screening_school",0.0424040862288195
+"year_other","Iran (Islamic Republic of)","dep_screening_school",0.0424071819100927
+"year_1","Iraq","dep_screening_school",0.0424041011713484
+"year_other","Iraq","dep_screening_school",0.0424470896677029
+"year_1","Italy","dep_screening_school",0.800099478878264
+"year_other","Italy","dep_screening_school",0.952999905803681
+"year_1","Japan","dep_screening_school",0.3979376013765
+"year_other","Japan","dep_screening_school",0.399184782887162
+"year_1","Kenya","dep_screening_school",0.00459606884986723
+"year_other","Kenya","dep_screening_school",0.00503066755348534
+"year_1","Mexico","dep_screening_school",0.0424050565716325
+"year_other","Mexico","dep_screening_school",0.0449987248723812
+"year_1","Morocco","dep_screening_school",0.00459742245274803
+"year_other","Morocco","dep_screening_school",0.00864580230015902
+"year_1","Mozambique","dep_screening_school",1.53126691224019e-05
+"year_other","Mozambique","dep_screening_school",0.000280128705689333
+"year_1","Nigeria","dep_screening_school",0.004595967783569
+"year_other","Nigeria","dep_screening_school",0.00476074474847817
+"year_1","Pakistan","dep_screening_school",0.00459601046794121
+"year_other","Pakistan","dep_screening_school",0.0048747440309303
+"year_1","Philippines","dep_screening_school",0.00195731329077824
+"year_other","Philippines","dep_screening_school",0.00249476624360934
+"year_1","Russian Federation","dep_screening_school",0.00195751677402737
+"year_other","Russian Federation","dep_screening_school",0.00303821910909308
+"year_1","South Africa","dep_screening_school",0.04240552484864
+"year_other","South Africa","dep_screening_school",0.0462493756392078
+"year_1","Sudan","dep_screening_school",0.00459628525519145
+"year_other","Sudan","dep_screening_school",0.00560863204960538
+"year_1","Thailand","dep_screening_school",0.0424043770068254
+"year_other","Thailand","dep_screening_school",0.0431837772377748
+"year_1","Turkey","dep_screening_school",0.0591556307446483
+"year_other","Turkey","dep_screening_school",0.0644439257490316
+"year_1","Uganda","dep_screening_school",1.52161734748083e-05
+"year_other","Uganda","dep_screening_school",2.24129653734969e-05
+"year_1","United Kingdom","dep_screening_school",0.815972407099545
+"year_other","United Kingdom","dep_screening_school",0.963487471610047
+"year_1","United Republic of Tanzania","dep_screening_school",1.52177497967209e-05
+"year_other","United Republic of Tanzania","dep_screening_school",2.66229269501671e-05
+"year_1","United States of America","dep_screening_school",0.397993486536878
+"year_other","United States of America","dep_screening_school",0.548440068889724
+"year_1","Viet Nam","dep_screening_school",0.00459590633483728
+"year_other","Viet Nam","dep_screening_school",0.00459663055491948
+"year_1","Yemen","dep_screening_school",1.52535659712768e-05
+"year_other","Yemen","dep_screening_school",0.00012227897124994
+"year_1","Afghanistan","dep_trt_mild_group",0.0661558901948965
+"year_other","Afghanistan","dep_trt_mild_group",0.0410491382733799
+"year_1","Algeria","dep_trt_mild_group",0.0969226354588699
+"year_other","Algeria","dep_trt_mild_group",0.0601399491069081
+"year_1","Argentina","dep_trt_mild_group",0.0665304992568897
+"year_other","Argentina","dep_trt_mild_group",0.0547630841246157
+"year_1","Bangladesh","dep_trt_mild_group",0.0530536360218764
+"year_other","Bangladesh","dep_trt_mild_group",0.0329194821744819
+"year_1","Brazil","dep_trt_mild_group",1.83523407731247
+"year_other","Brazil","dep_trt_mild_group",1.13875240274159
+"year_1","China","dep_trt_mild_group",0.582360560180477
+"year_other","China","dep_trt_mild_group",0.361351445772301
+"year_1","Colombia","dep_trt_mild_group",0.00241718848215879
+"year_other","Colombia","dep_trt_mild_group",0.00149985183141789
+"year_1","Democratic Republic of the Congo","dep_trt_mild_group",0.000631382914592267
+"year_other","Democratic Republic of the Congo","dep_trt_mild_group",0.000391769540425506
+"year_1","Egypt","dep_trt_mild_group",0.831577298971645
+"year_other","Egypt","dep_trt_mild_group",0.515989027762638
+"year_1","Ethiopia","dep_trt_mild_group",0.0952116748286629
+"year_other","Ethiopia","dep_trt_mild_group",0.0590783076777681
+"year_1","France","dep_trt_mild_group",33.0108016057225
+"year_other","France","dep_trt_mild_group",20.4830163681306
+"year_1","Germany","dep_trt_mild_group",28.8495648625284
+"year_other","Germany","dep_trt_mild_group",17.9009924191049
+"year_1","India","dep_trt_mild_group",0.0917491539979663
+"year_other","India","dep_trt_mild_group",0.0569298330149215
+"year_1","Indonesia","dep_trt_mild_group",0.00033962976518125
+"year_other","Indonesia","dep_trt_mild_group",0.000210738355354144
+"year_1","Iran (Islamic Republic of)","dep_trt_mild_group",0.000608067731293101
+"year_other","Iran (Islamic Republic of)","dep_trt_mild_group",0.000377302600578155
+"year_1","Iraq","dep_trt_mild_group",0.00844399508301399
+"year_other","Iraq","dep_trt_mild_group",0.00523945136393802
+"year_1","Italy","dep_trt_mild_group",30.0333941085984
+"year_other","Italy","dep_trt_mild_group",18.6355517949706
+"year_1","Japan","dep_trt_mild_group",0.244977038899717
+"year_other","Japan","dep_trt_mild_group",0.152006872099986
+"year_1","Kenya","dep_trt_mild_group",0.0853658449967277
+"year_other","Kenya","dep_trt_mild_group",0.0529690257519878
+"year_1","Mexico","dep_trt_mild_group",0.509460070385304
+"year_other","Mexico","dep_trt_mild_group",0.316117102675937
+"year_1","Morocco","dep_trt_mild_group",0.795201098541797
+"year_other","Morocco","dep_trt_mild_group",0.493417800389419
+"year_1","Mozambique","dep_trt_mild_group",0.0520163648488121
+"year_other","Mozambique","dep_trt_mild_group",0.0322758612570067
+"year_1","Nigeria","dep_trt_mild_group",0.0323662374700226
+"year_other","Nigeria","dep_trt_mild_group",0.020083067954289
+"year_1","Pakistan","dep_trt_mild_group",0.0547501083998176
+"year_other","Pakistan","dep_trt_mild_group",0.0339721337247377
+"year_1","Philippines","dep_trt_mild_group",0.105568942296545
+"year_other","Philippines","dep_trt_mild_group",0.065504933774511
+"year_1","Russian Federation","dep_trt_mild_group",0.21227644549968
+"year_other","Russian Federation","dep_trt_mild_group",0.131716338175344
+"year_1","South Africa","dep_trt_mild_group",0.755026575197757
+"year_other","South Africa","dep_trt_mild_group",0.468489735052915
+"year_1","Sudan","dep_trt_mild_group",0.198849740727282
+"year_other","Sudan","dep_trt_mild_group",0.123385143528577
+"year_1","Thailand","dep_trt_mild_group",0.153093322073298
+"year_other","Thailand","dep_trt_mild_group",0.0949935436083216
+"year_1","Turkey","dep_trt_mild_group",1.03875084735146
+"year_other","Turkey","dep_trt_mild_group",0.644539047031841
+"year_1","Uganda","dep_trt_mild_group",0.00141362644799098
+"year_other","Uganda","dep_trt_mild_group",0.000877147244664368
+"year_1","United Kingdom","dep_trt_mild_group",28.9755768410005
+"year_other","United Kingdom","dep_trt_mild_group",17.9791821416222
+"year_1","United Republic of Tanzania","dep_trt_mild_group",0.00224025653306328
+"year_other","United Republic of Tanzania","dep_trt_mild_group",0.00139006655408186
+"year_1","United States of America","dep_trt_mild_group",29.5513988479493
+"year_other","United States of America","dep_trt_mild_group",18.3364764519614
+"year_1","Viet Nam","dep_trt_mild_group",0.000142254587430842
+"year_other","Viet Nam","dep_trt_mild_group",8.82681698430038e-05
+"year_1","Yemen","dep_trt_mild_group",0.0210224146590151
+"year_other","Yemen","dep_trt_mild_group",0.0130442898267454
+"year_1","Afghanistan","dep_trt_mild_internet",1.33248569744409
+"year_other","Afghanistan","dep_trt_mild_internet",1.32952381805564
+"year_1","Algeria","dep_trt_mild_internet",1.74648038829493
+"year_other","Algeria","dep_trt_mild_internet",1.74215703508474
+"year_1","Argentina","dep_trt_mild_internet",2.53432896471091
+"year_other","Argentina","dep_trt_mild_internet",2.53165513103329
+"year_1","Bangladesh","dep_trt_mild_internet",1.11058730890897
+"year_other","Bangladesh","dep_trt_mild_internet",1.10822078630544
+"year_1","Brazil","dep_trt_mild_internet",12.4531163186504
+"year_other","Brazil","dep_trt_mild_internet",12.3712534483104
+"year_1","China","dep_trt_mild_internet",4.45898485764352
+"year_other","China","dep_trt_mild_internet",4.43300794951034
+"year_1","Colombia","dep_trt_mild_internet",1.24328538935416
+"year_other","Colombia","dep_trt_mild_internet",1.24317756769274
+"year_1","Democratic Republic of the Congo","dep_trt_mild_internet",2.79903781116117
+"year_other","Democratic Republic of the Congo","dep_trt_mild_internet",2.7990096475507
+"year_1","Egypt","dep_trt_mild_internet",6.12566258442375
+"year_other","Egypt","dep_trt_mild_internet",6.08856905752982
+"year_1","Ethiopia","dep_trt_mild_internet",2.99252000017792
+"year_other","Ethiopia","dep_trt_mild_internet",2.98827296646832
+"year_1","France","dep_trt_mild_internet",208.288327723529
+"year_other","France","dep_trt_mild_internet",206.815840368876
+"year_1","Germany","dep_trt_mild_internet",182.194463542068
+"year_other","Germany","dep_trt_mild_internet",180.907593263827
+"year_1","India","dep_trt_mild_internet",1.3580474938826
+"year_other","India","dep_trt_mild_internet",1.35395491016786
+"year_1","Indonesia","dep_trt_mild_internet",1.24059745621653
+"year_other","Indonesia","dep_trt_mild_internet",1.24058230661367
+"year_1","Iran (Islamic Republic of)","dep_trt_mild_internet",0.95827725170583
+"year_other","Iran (Islamic Republic of)","dep_trt_mild_internet",0.958250128097752
+"year_1","Iraq","dep_trt_mild_internet",1.35606548387707
+"year_other","Iraq","dep_trt_mild_internet",1.35568882910415
+"year_1","Italy","dep_trt_mild_internet",189.277117222573
+"year_other","Italy","dep_trt_mild_internet",187.937440786647
+"year_1","Japan","dep_trt_mild_internet",3.10530125546526
+"year_other","Japan","dep_trt_mild_internet",3.09437375372602
+"year_1","Kenya","dep_trt_mild_internet",1.9667668910027
+"year_other","Kenya","dep_trt_mild_internet",1.96295904262694
+"year_1","Mexico","dep_trt_mild_internet",4.35529529181046
+"year_other","Mexico","dep_trt_mild_internet",4.33257019957238
+"year_1","Morocco","dep_trt_mild_internet",6.35583491371341
+"year_other","Morocco","dep_trt_mild_internet",6.32036399192259
+"year_1","Mozambique","dep_trt_mild_internet",1.3817049278201
+"year_other","Mozambique","dep_trt_mild_internet",1.37938467397138
+"year_1","Nigeria","dep_trt_mild_internet",2.08746669155747
+"year_other","Nigeria","dep_trt_mild_internet",2.08602295577785
+"year_1","Pakistan","dep_trt_mild_internet",1.69175554323991
+"year_other","Pakistan","dep_trt_mild_internet",1.68931334740209
+"year_1","Philippines","dep_trt_mild_internet",1.71494899867897
+"year_other","Philippines","dep_trt_mild_internet",1.71023996633155
+"year_1","Russian Federation","dep_trt_mild_internet",2.1851553516988
+"year_other","Russian Federation","dep_trt_mild_internet",2.17568650009616
+"year_1","South Africa","dep_trt_mild_internet",6.33158926632989
+"year_other","South Africa","dep_trt_mild_internet",6.29791037850147
+"year_1","Sudan","dep_trt_mild_internet",2.64456844732305
+"year_other","Sudan","dep_trt_mild_internet",2.63569851037956
+"year_1","Thailand","dep_trt_mild_internet",2.20962552168222
+"year_other","Thailand","dep_trt_mild_internet",2.20279660599797
+"year_1","Turkey","dep_trt_mild_internet",7.77205156157447
+"year_other","Turkey","dep_trt_mild_internet",7.7257168040721
+"year_1","Uganda","dep_trt_mild_internet",2.51955580618746
+"year_other","Uganda","dep_trt_mild_internet",2.51949274964331
+"year_1","United Kingdom","dep_trt_mild_internet",183.055803410701
+"year_other","United Kingdom","dep_trt_mild_internet",181.763312213373
+"year_1","United Republic of Tanzania","dep_trt_mild_internet",1.2816014425969
+"year_other","United Republic of Tanzania","dep_trt_mild_internet",1.28150151320241
+"year_1","United States of America","dep_trt_mild_internet",186.655840222907
+"year_other","United States of America","dep_trt_mild_internet",185.337663777645
+"year_1","Viet Nam","dep_trt_mild_internet",0.892996748102255
+"year_other","Viet Nam","dep_trt_mild_internet",0.892990402661643
+"year_1","Yemen","dep_trt_mild_internet",1.65953615752324
+"year_other","Yemen","dep_trt_mild_internet",1.65859842689436
+"year_1","Afghanistan","dep_trt_mild_internet_self",0.539975024237377
+"year_other","Afghanistan","dep_trt_mild_internet_self",0.538628715424447
+"year_1","Algeria","dep_trt_mild_internet_self",0.632467966362201
+"year_other","Algeria","dep_trt_mild_internet_self",0.630502805812118
+"year_1","Argentina","dep_trt_mild_internet_self",0.567563646769809
+"year_other","Argentina","dep_trt_mild_internet_self",0.566348267825432
+"year_1","Bangladesh","dep_trt_mild_internet_self",0.466088843767587
+"year_other","Bangladesh","dep_trt_mild_internet_self",0.465013151675074
+"year_1","Brazil","dep_trt_mild_internet_self",5.64438218463484
+"year_other","Brazil","dep_trt_mild_internet_self",5.60717178902573
+"year_1","China","dep_trt_mild_internet_self",2.05874225050323
+"year_other","China","dep_trt_mild_internet_self",2.04693456498815
+"year_1","Colombia","dep_trt_mild_internet_self",0.315452985102521
+"year_other","Colombia","dep_trt_mild_internet_self",0.315403975256423
+"year_1","Democratic Republic of the Congo","dep_trt_mild_internet_self",0.349272569561063
+"year_other","Democratic Republic of the Congo","dep_trt_mild_internet_self",0.349259767919941
+"year_1","Egypt","dep_trt_mild_internet_self",2.7529970651942
+"year_other","Egypt","dep_trt_mild_internet_self",2.7361363711515
+"year_1","Ethiopia","dep_trt_mild_internet_self",0.654998643931019
+"year_other","Ethiopia","dep_trt_mild_internet_self",0.653068174063018
+"year_1","France","dep_trt_mild_internet_self",93.8421420243709
+"year_other","France","dep_trt_mild_internet_self",93.1728295904378
+"year_1","Germany","dep_trt_mild_internet_self",82.1162538702623
+"year_other","Germany","dep_trt_mild_internet_self",81.5313128346983
+"year_1","India","dep_trt_mild_internet_self",0.581649489477988
+"year_other","India","dep_trt_mild_internet_self",0.579789224153106
+"year_1","Indonesia","dep_trt_mild_internet_self",0.326386892313714
+"year_other","Indonesia","dep_trt_mild_internet_self",0.326380006130594
+"year_1","Iran (Islamic Republic of)","dep_trt_mild_internet_self",0.314959072492993
+"year_other","Iran (Islamic Republic of)","dep_trt_mild_internet_self",0.31494674358023
+"year_1","Iraq","dep_trt_mild_internet_self",0.357035228726335
+"year_other","Iraq","dep_trt_mild_internet_self",0.356864022011374
+"year_1","Italy","dep_trt_mild_internet_self",85.4957203280858
+"year_other","Italy","dep_trt_mild_internet_self",84.886776493574
+"year_1","Japan","dep_trt_mild_internet_self",0.975721230553847
+"year_other","Japan","dep_trt_mild_internet_self",0.97075418430874
+"year_1","Kenya","dep_trt_mild_internet_self",0.598067642214026
+"year_other","Kenya","dep_trt_mild_internet_self",0.596336802043225
+"year_1","Mexico","dep_trt_mild_internet_self",1.78913902410323
+"year_other","Mexico","dep_trt_mild_internet_self",1.77880943672229
+"year_1","Morocco","dep_trt_mild_internet_self",2.6737983793584
+"year_other","Morocco","dep_trt_mild_internet_self",2.65767523308984
+"year_1","Mozambique","dep_trt_mild_internet_self",0.514016251941232
+"year_other","Mozambique","dep_trt_mild_internet_self",0.512961591100907
+"year_1","Nigeria","dep_trt_mild_internet_self",0.444172031346243
+"year_other","Nigeria","dep_trt_mild_internet_self",0.44351578781005
+"year_1","Pakistan","dep_trt_mild_internet_self",0.495775143516236
+"year_other","Pakistan","dep_trt_mild_internet_self",0.494665054499045
+"year_1","Philippines","dep_trt_mild_internet_self",0.632807047830974
+"year_other","Philippines","dep_trt_mild_internet_self",0.630666578582146
+"year_1","Russian Federation","dep_trt_mild_internet_self",0.91615060661315
+"year_other","Russian Federation","dep_trt_mild_internet_self",0.911846583157403
+"year_1","South Africa","dep_trt_mild_internet_self",2.54056160369923
+"year_other","South Africa","dep_trt_mild_internet_self",2.52525301832267
+"year_1","Sudan","dep_trt_mild_internet_self",0.918728621669083
+"year_other","Sudan","dep_trt_mild_internet_self",0.914696832149314
+"year_1","Thailand","dep_trt_mild_internet_self",0.791557675702392
+"year_other","Thailand","dep_trt_mild_internet_self",0.788453623118645
+"year_1","Turkey","dep_trt_mild_internet_self",3.3855500176909
+"year_other","Turkey","dep_trt_mild_internet_self",3.36448876428073
+"year_1","Uganda","dep_trt_mild_internet_self",0.351486391371486
+"year_other","Uganda","dep_trt_mild_internet_self",0.351457729305964
+"year_1","United Kingdom","dep_trt_mild_internet_self",82.4882473369295
+"year_other","United Kingdom","dep_trt_mild_internet_self",81.900751338144
+"year_1","United Republic of Tanzania","dep_trt_mild_internet_self",0.353946002972711
+"year_other","United Republic of Tanzania","dep_trt_mild_internet_self",0.35390058052067
+"year_1","United States of America","dep_trt_mild_internet_self",83.9581604229194
+"year_other","United States of America","dep_trt_mild_internet_self",83.3589893114363
+"year_1","Viet Nam","dep_trt_mild_internet_self",0.316089454481162
+"year_other","Viet Nam","dep_trt_mild_internet_self",0.316086570189974
+"year_1","Yemen","dep_trt_mild_internet_self",0.395325474646272
+"year_other","Yemen","dep_trt_mild_internet_self",0.394899233451325
+"year_1","Afghanistan","dep_trt_severe",1.74465690215722
+"year_other","Afghanistan","dep_trt_severe",1.66849140185612
+"year_1","Algeria","dep_trt_severe",2.34767821833205
+"year_other","Algeria","dep_trt_severe",2.23700589999138
+"year_1","Argentina","dep_trt_severe",1.03810306462913
+"year_other","Argentina","dep_trt_severe",1.0031095903416
+"year_1","Bangladesh","dep_trt_severe",1.45273175715878
+"year_other","Bangladesh","dep_trt_severe",1.39215180215503
+"year_1","Brazil","dep_trt_severe",35.0147660774214
+"year_other","Brazil","dep_trt_severe",32.9191811908533
+"year_1","China","dep_trt_severe",11.4366403985055
+"year_other","China","dep_trt_severe",10.7716647403406
+"year_1","Colombia","dep_trt_severe",0.506613610140881
+"year_other","Colombia","dep_trt_severe",0.503853513369674
+"year_1","Democratic Republic of the Congo","dep_trt_severe",0.531082293739937
+"year_other","Democratic Republic of the Congo","dep_trt_severe",0.530361341295879
+"year_1","Egypt","dep_trt_severe",16.1542914302395
+"year_other","Egypt","dep_trt_severe",15.2047445352243
+"year_1","Ethiopia","dep_trt_severe",2.311833635383
+"year_other","Ethiopia","dep_trt_severe",2.20311499874567
+"year_1","France","dep_trt_severe",621.946305690795
+"year_other","France","dep_trt_severe",584.252510771863
+"year_1","Germany","dep_trt_severe",543.59882162858
+"year_other","Germany","dep_trt_severe",510.656586707508
+"year_1","India","dep_trt_severe",2.18128835343255
+"year_other","India","dep_trt_severe",2.07652343932682
+"year_1","Indonesia","dep_trt_severe",0.492912598243583
+"year_other","Indonesia","dep_trt_severe",0.492524787766576
+"year_1","Iran (Islamic Republic of)","dep_trt_severe",0.479813070718115
+"year_other","Iran (Islamic Republic of)","dep_trt_severe",0.479118741006467
+"year_1","Iraq","dep_trt_severe",0.656393236158108
+"year_other","Iraq","dep_trt_severe",0.646751355213889
+"year_1","Italy","dep_trt_severe",565.887878635622
+"year_other","Italy","dep_trt_severe",531.593873546914
+"year_1","Japan","dep_trt_severe",5.03357602379566
+"year_other","Japan","dep_trt_severe",4.75384594106623
+"year_1","Kenya","dep_trt_severe",2.12645701697779
+"year_other","Kenya","dep_trt_severe",2.02898096375071
+"year_1","Mexico","dep_trt_severe",10.0531827097576
+"year_other","Mexico","dep_trt_severe",9.47144938374347
+"year_1","Morocco","dep_trt_severe",15.4694027879188
+"year_other","Morocco","dep_trt_severe",14.5613925103814
+"year_1","Mozambique","dep_trt_severe",1.49855525949057
+"year_other","Mozambique","dep_trt_severe",1.43915972549361
+"year_1","Nigeria","dep_trt_severe",1.13221472161619
+"year_other","Nigeria","dep_trt_severe",1.09525693028279
+"year_1","Pakistan","dep_trt_severe",1.52824160695919
+"year_other","Pakistan","dep_trt_severe",1.4657245138434
+"year_1","Philippines","dep_trt_severe",2.45964005257335
+"year_other","Philippines","dep_trt_severe",2.33909484109188
+"year_1","Russian Federation","dep_trt_severe",4.44693731717066
+"year_other","Russian Federation","dep_trt_severe",4.20454681425728
+"year_1","South Africa","dep_trt_severe",14.7347839698549
+"year_other","South Africa","dep_trt_severe",13.8726474721179
+"year_1","Sudan","dep_trt_severe",4.24133974193364
+"year_other","Sudan","dep_trt_severe",4.0142806890763
+"year_1","Thailand","dep_trt_severe",3.36894878943811
+"year_other","Thailand","dep_trt_severe",3.19413727305589
+"year_1","Turkey","dep_trt_severe",20.0004800140517
+"year_other","Turkey","dep_trt_severe",18.8143694227492
+"year_1","Uganda","dep_trt_severe",0.545810322099767
+"year_other","Uganda","dep_trt_severe",0.544196155135299
+"year_1","United Kingdom","dep_trt_severe",545.971366639662
+"year_other","United Kingdom","dep_trt_severe",512.885243371661
+"year_1","United Republic of Tanzania","dep_trt_severe",0.561374057453559
+"year_other","United Republic of Tanzania","dep_trt_severe",0.558815992631878
+"year_1","United States of America","dep_trt_severe",556.820165919283
+"year_other","United States of America","dep_trt_severe",523.076533121554
+"year_1","Viet Nam","dep_trt_severe",0.474673504219315
+"year_other","Viet Nam","dep_trt_severe",0.474511069047066
+"year_1","Yemen","dep_trt_severe",0.893218869515886
+"year_other","Yemen","dep_trt_severe",0.869214163531396
+"year_1","Afghanistan","suicide_prevention_hospital",0.0477281286589266
+"year_other","Afghanistan","suicide_prevention_hospital",0.0476101029802068
+"year_1","Algeria","suicide_prevention_hospital",0.0573016684549571
+"year_other","Algeria","suicide_prevention_hospital",0.0571294195939367
+"year_1","Argentina","suicide_prevention_hospital",0.051197124864408
+"year_other","Argentina","suicide_prevention_hospital",0.0510929158110771
+"year_1","Bangladesh","suicide_prevention_hospital",0.0416432037181911
+"year_other","Bangladesh","suicide_prevention_hospital",0.0415489179165877
+"year_1","Brazil","suicide_prevention_hospital",0.50642274982536
+"year_other","Brazil","suicide_prevention_hospital",0.503161210577834
+"year_1","China","suicide_prevention_hospital",0.180663170615148
+"year_other","China","suicide_prevention_hospital",0.179628211725315
+"year_1","Colombia","suicide_prevention_hospital",0.0288953653236528
+"year_other","Colombia","suicide_prevention_hospital",0.0288910695473261
+"year_1","Democratic Republic of the Congo","suicide_prevention_hospital",0.0319911048712034
+"year_other","Democratic Republic of the Congo","suicide_prevention_hospital",0.0319899827908205
+"year_1","Egypt","suicide_prevention_hospital",0.247152762216712
+"year_other","Egypt","suicide_prevention_hospital",0.245674900601414
+"year_1","Ethiopia","suicide_prevention_hospital",0.0566333261964105
+"year_other","Ethiopia","suicide_prevention_hospital",0.0564641180184918
+"year_1","France","suicide_prevention_hospital",8.62654659320023
+"year_other","France","suicide_prevention_hospital",8.56788049367629
+"year_1","Germany","suicide_prevention_hospital",7.54236600190394
+"year_other","Germany","suicide_prevention_hospital",7.49109516444708
+"year_1","India","suicide_prevention_hospital",0.0517250452833098
+"year_other","India","suicide_prevention_hospital",0.0515619906242933
+"year_1","Indonesia","suicide_prevention_hospital",0.0299120177786107
+"year_other","Indonesia","suicide_prevention_hospital",0.029911414195764
+"year_1","Iran (Islamic Republic of)","suicide_prevention_hospital",0.0288691391074979
+"year_other","Iran (Islamic Republic of)","suicide_prevention_hospital",0.0288680584623664
+"year_1","Iraq","suicide_prevention_hospital",0.0326912433941531
+"year_other","Iraq","suicide_prevention_hospital",0.0326762369044035
+"year_1","Italy","suicide_prevention_hospital",7.85080427908132
+"year_other","Italy","suicide_prevention_hospital",7.79742956528729
+"year_1","Japan","suicide_prevention_hospital",0.0896444063035591
+"year_other","Japan","suicide_prevention_hospital",0.0892090382832114
+"year_1","Kenya","suicide_prevention_hospital",0.0540680653694582
+"year_other","Kenya","suicide_prevention_hospital",0.0539163549924023
+"year_1","Mexico","suicide_prevention_hospital",0.161001776335579
+"year_other","Mexico","suicide_prevention_hospital",0.160096374656768
+"year_1","Morocco","suicide_prevention_hospital",0.237675202316847
+"year_other","Morocco","suicide_prevention_hospital",0.236261987716795
+"year_1","Mozambique","suicide_prevention_hospital",0.0453790958785185
+"year_other","Mozambique","suicide_prevention_hospital",0.0452866534933398
+"year_1","Nigeria","suicide_prevention_hospital",0.0404819588198394
+"year_other","Nigeria","suicide_prevention_hospital",0.0404244382260862
+"year_1","Pakistan","suicide_prevention_hospital",0.0447559713619998
+"year_other","Pakistan","suicide_prevention_hospital",0.0446586706255107
+"year_1","Philippines","suicide_prevention_hospital",0.0564385109516536
+"year_other","Philippines","suicide_prevention_hospital",0.0562508960567056
+"year_1","Russian Federation","suicide_prevention_hospital",0.0829050088660898
+"year_other","Russian Federation","suicide_prevention_hospital",0.0825277556497936
+"year_1","South Africa","suicide_prevention_hospital",0.228543398363843
+"year_other","South Africa","suicide_prevention_hospital",0.227201581078312
+"year_1","Sudan","suicide_prevention_hospital",0.0823001040859766
+"year_other","Sudan","suicide_prevention_hospital",0.0819467125258699
+"year_1","Thailand","suicide_prevention_hospital",0.0697109041842383
+"year_other","Thailand","suicide_prevention_hospital",0.0694388299651243
+"year_1","Turkey","suicide_prevention_hospital",0.297791899654582
+"year_other","Turkey","suicide_prevention_hospital",0.295945853583991
+"year_1","Uganda","suicide_prevention_hospital",0.0321949128515989
+"year_other","Uganda","suicide_prevention_hospital",0.0321924005845271
+"year_1","United Kingdom","suicide_prevention_hospital",7.57519752526146
+"year_other","United Kingdom","suicide_prevention_hospital",7.52370274197745
+"year_1","United Republic of Tanzania","suicide_prevention_hospital",0.0324102854318499
+"year_other","United Republic of Tanzania","suicide_prevention_hospital",0.0324063040952469
+"year_1","United States of America","suicide_prevention_hospital",7.72566897467137
+"year_other","United States of America","suicide_prevention_hospital",7.67315085267626
+"year_1","Viet Nam","suicide_prevention_hospital",0.0289703384652353
+"year_other","Viet Nam","suicide_prevention_hospital",0.0289700856533865
+"year_1","Yemen","suicide_prevention_hospital",0.0359684610135991
+"year_other","Yemen","suicide_prevention_hospital",0.0359311004221978
+"year_1","Afghanistan","suicide_prevention_school",0.113355510819296
+"year_other","Afghanistan","suicide_prevention_school",0.0018301874679987
+"year_1","Algeria","suicide_prevention_school",0.0528036929697676
+"year_other","Algeria","suicide_prevention_school",0.0026812600824777
+"year_1","Argentina","suicide_prevention_school",0.0192729552374118
+"year_other","Argentina","suicide_prevention_school",0.00241878513783624
+"year_1","Bangladesh","suicide_prevention_school",0.101015605719756
+"year_other","Bangladesh","suicide_prevention_school",0.00146767156941501
+"year_1","Brazil","suicide_prevention_school",0.75294666687465
+"year_other","Brazil","suicide_prevention_school",0.0507697696229989
+"year_1","China","suicide_prevention_school",0.701037609182634
+"year_other","China","suicide_prevention_school",0.0161103762421306
+"year_1","Colombia","suicide_prevention_school",0.00134760290293378
+"year_other","Colombia","suicide_prevention_school",6.68689100162527e-05
+"year_1","Democratic Republic of the Congo","suicide_prevention_school",0.00199903374066899
+"year_other","Democratic Republic of the Congo","suicide_prevention_school",1.74665267575506e-05
+"year_1","Egypt","suicide_prevention_school",0.456796328040204
+"year_other","Egypt","suicide_prevention_school",0.0230046882925865
+"year_1","Ethiopia","suicide_prevention_school",0.32405423843757
+"year_other","Ethiopia","suicide_prevention_school",0.00263392820361632
+"year_1","France","suicide_prevention_school",4.49987221826933
+"year_other","France","suicide_prevention_school",0.913208191429904
+"year_1","Germany","suicide_prevention_school",4.44515147441013
+"year_other","Germany","suicide_prevention_school",0.798092068963335
+"year_1","India","suicide_prevention_school",0.119454495021574
+"year_other","India","suicide_prevention_school",0.00253814130260872
+"year_1","Indonesia","suicide_prevention_school",0.000441637536885818
+"year_other","Indonesia","suicide_prevention_school",9.39549082513544e-06
+"year_1","Iran (Islamic Republic of)","suicide_prevention_school",0.000235109168168247
+"year_other","Iran (Islamic Republic of)","suicide_prevention_school",1.68215373802009e-05
+"year_1","Iraq","suicide_prevention_school",0.00428000653810209
+"year_other","Iraq","suicide_prevention_school",0.000233594008721844
+"year_1","Italy","suicide_prevention_school",4.75882720526278
+"year_other","Italy","suicide_prevention_school",0.830841427118212
+"year_1","Japan","suicide_prevention_school",0.0246709339033122
+"year_other","Japan","suicide_prevention_school",0.00677702532969335
+"year_1","Kenya","suicide_prevention_school",0.0746206402111895
+"year_other","Kenya","suicide_prevention_school",0.00236155394983905
+"year_1","Mexico","suicide_prevention_school",0.225446819008945
+"year_other","Mexico","suicide_prevention_school",0.0140936628876551
+"year_1","Morocco","suicide_prevention_school",0.544819578318087
+"year_other","Morocco","suicide_prevention_school",0.0219983799756181
+"year_1","Mozambique","suicide_prevention_school",0.0922084110442679
+"year_other","Mozambique","suicide_prevention_school",0.00143897658214114
+"year_1","Nigeria","suicide_prevention_school",0.0213687992591612
+"year_other","Nigeria","suicide_prevention_school",0.000895377020419473
+"year_1","Pakistan","suicide_prevention_school",0.0625604581043687
+"year_other","Pakistan","suicide_prevention_school",0.00151460264641745
+"year_1","Philippines","suicide_prevention_school",0.125710376765661
+"year_other","Philippines","suicide_prevention_school",0.00292045082749774
+"year_1","Russian Federation","suicide_prevention_school",0.0758148989187363
+"year_other","Russian Federation","suicide_prevention_school",0.00587239871340557
+"year_1","South Africa","suicide_prevention_school",0.276821022620188
+"year_other","South Africa","suicide_prevention_school",0.0208869951554988
+"year_1","Sudan","suicide_prevention_school",0.226839386682166
+"year_other","Sudan","suicide_prevention_school",0.00550096341993667
+"year_1","Thailand","suicide_prevention_school",0.198275770226588
+"year_other","Thailand","suicide_prevention_school",0.00423516149169538
+"year_1","Turkey","suicide_prevention_school",0.743137034548539
+"year_other","Turkey","suicide_prevention_school",0.0287359208657225
+"year_1","Uganda","suicide_prevention_school",0.00173219752204981
+"year_other","Uganda","suicide_prevention_school",3.91064496811109e-05
+"year_1","United Kingdom","suicide_prevention_school",3.89599816666508
+"year_other","United Kingdom","suicide_prevention_school",0.801578054318477
+"year_1","United Republic of Tanzania","suicide_prevention_school",0.00265890896133012
+"year_other","United Republic of Tanzania","suicide_prevention_school",6.19742786416642e-05
+"year_1","United States of America","suicide_prevention_school",3.32018036025037
+"year_other","United States of America","suicide_prevention_school",0.817507548543786
+"year_1","Viet Nam","suicide_prevention_school",0.000377725672346733
+"year_other","Viet Nam","suicide_prevention_school",3.93531959817076e-06
+"year_1","Yemen","suicide_prevention_school",0.0318341180034632
+"year_other","Yemen","suicide_prevention_school",0.000581562407951968

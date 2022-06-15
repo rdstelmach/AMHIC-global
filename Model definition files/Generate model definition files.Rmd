@@ -1,0 +1,624 @@
+---
+title: "Generate model definition files"
+author: "Rachel Stelmach"
+date: "December 10, 2021"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup}
+library(xlsx)
+library(tidyverse)
+
+workbook_with_model <- "amh_model_inputs_all_interventions_third_revision_attempt.xlsx"
+
+param_all <- read.xlsx(workbook_with_model, 
+                       sheetName = "Parameters", 
+                       stringsAsFactors = FALSE, colClasses = "character")
+start_all <- read.xlsx(workbook_with_model, 
+                       sheetName = "Starting states")
+trans_all <- read.xlsx(workbook_with_model, 
+                       sheetName = "Transition probabilities")
+val_all <- read.xlsx(workbook_with_model, 
+                     sheetName = "State values")
+
+#param_none_old <- read.xlsx("amh_model_inputs_no_interventions.xlsx", sheetName = "Parameters", 
+#                            stringsAsFactors = FALSE, colClasses = "character")
+
+#param_suicide_prev_hospital_old <- read.xlsx("amh_model_inputs_suicide_prevention_hospital.xlsx", 
+#                                   sheetName = "Parameters", stringsAsFactors = FALSE, colClasses = "character")
+```
+
+```{r clean_all}
+# the scientific notation with an "e" in it messes up the dataset
+param_all$value <- ifelse(grepl("[0-9]e[-|+]", param_all$value),
+                          trimws(format(as.numeric(param_all$value), scientific = FALSE)),
+                          param_all$value)
+param_all$low <- ifelse(grepl("[0-9]e[-|+]", param_all$low),
+                        trimws(format(as.numeric(param_all$low), scientific = FALSE)),
+                        param_all$low)
+param_all$high <- ifelse(grepl("[0-9]e[-|+]", param_all$high),
+                          trimws(format(as.numeric(param_all$high), scientific = FALSE)),
+                          param_all$high)
+```
+
+```{r no_interventions}
+# get the values of the parameters, given no interventions
+param_none <- param_all
+
+rates_to_keep_same <- "RR_suicide_follow_up_self_harm_by_age|RR_suicide_dep|RR_suicide_bip|RR_suicide_anx|RR_suicide_after|OR_not|val|OR_suicide_prevention$"
+
+param_none$value <- ifelse(grepl("^c_|Pr_receive|Pr_hospitalized_receive_prevention_self_harm", 
+                                 param_none$parameter), 0, param_none$value)
+param_none$value <- ifelse(grepl(rates_to_keep_same, param_none$parameter), param_none$value,
+                           (ifelse(grepl("OR|RR|HR", param_none$parameter), 1, param_none$value)))
+param_none$value <- ifelse(param_none$parameter == "Pr_suicide_not_mh_w_self_harm_invest", "Pr_suicide_not_mh",
+                           param_none$value)
+
+param_none$high <- ifelse(grepl("Pr_receive|Pr_hospitalized_receive_prevention_self_harm", param_none$parameter), 0, as.character(param_none$high))
+param_none$high <- ifelse(grepl(rates_to_keep_same, param_none$parameter), param_none$high,
+                                 (ifelse(grepl("OR|RR|HR", param_none$parameter), 1, param_none$high)))
+
+param_none$low <- ifelse(grepl("Pr_receive|Pr_hospitalized_receive_prevention_self_harm", param_none$parameter), 0, as.character(param_none$low))
+param_none$low <- ifelse(grepl(rates_to_keep_same, param_none$parameter), param_none$low,
+                         (ifelse(grepl("OR|RR|HR", param_none$parameter), 1, param_none$low)))
+
+output_workbook <- function (param_dataframe, intervention_name) {
+  param_dataframe = param_dataframe[grep("NA", colnames(param_dataframe), invert = TRUE, value = TRUE)]
+  
+  wb = createWorkbook(type = "xlsx")
+  bold_left = CellStyle(wb) + Alignment(h = "ALIGN_LEFT", v = "VERTICAL_CENTER", wrapText = TRUE) + 
+    Font(wb, isBold = TRUE)
+  align_right = CellStyle(wb) + Alignment(h = "ALIGN_RIGHT", v = "VERTICAL_CENTER", wrapText = TRUE)
+  align_left = CellStyle(wb) + Alignment(h = "ALIGN_LEFT", v = "VERTICAL_CENTER", wrapText = TRUE)
+  
+  align_all_left = c(rep(list(align_left), times = 15))
+  names(align_all_left) = 1:15
+  
+  sheet_param = createSheet(wb, sheetName = "Parameters")
+  
+  align_all_left = c(rep(list(align_left), times = 8))
+  names(align_all_left) = 1:8
+  
+  addDataFrame(param_dataframe, 
+               sheet_param, row.names = FALSE,
+               colnamesStyle = bold_left, 
+               colStyle = align_all_left)
+  
+  setColumnWidth(sheet_param, colIndex = 1, colWidth = max(sapply(param_dataframe$parameter, nchar)) + 2)
+  setColumnWidth(sheet_param, colIndex = 2, colWidth = 68)
+  setColumnWidth(sheet_param, colIndex = c(3, 5), colWidth = 14)
+  setColumnWidth(sheet_param, colIndex = 4, colWidth = 23)
+  setColumnWidth(sheet_param, colIndex = 6, colWidth = 55)
+  setColumnWidth(sheet_param, colIndex = 7, colWidth = 17)
+  setColumnWidth(sheet_param, colIndex = 8, colWidth = 9)
+  
+  sheet_start = createSheet(wb, sheetName = "Starting states")
+  addDataFrame(start_all, 
+               sheet_start, row.names = FALSE,
+               colnamesStyle = bold_left)
+  setColumnWidth(sheet_start, colIndex = 1, colWidth = max(sapply(as.character(start_all$state), nchar)) + 2)
+  setColumnWidth(sheet_start, colIndex = 2, colWidth = max(sapply(as.character(start_all$n_start), nchar)) + 2)
+  
+  sheet_trans = createSheet(wb, sheetName = "Transition probabilities")
+  addDataFrame(trans_all, 
+               sheet_trans, row.names = FALSE,
+               colnamesStyle = bold_left)
+  setColumnWidth(sheet_trans, colIndex = c(2:3), colWidth = max(sapply(as.character(trans_all$from), nchar)) + 4)
+  
+  sheet_val = createSheet(wb, sheetName = "State values")
+  addDataFrame(val_all, 
+               sheet_val, row.names = FALSE,
+               colnamesStyle = bold_left)
+  setColumnWidth(sheet_val, colIndex = c(2), colWidth = max(sapply(as.character(val_all$state), nchar)) + 4)
+  setColumnWidth(sheet_val, colIndex = c(3), colWidth = max(sapply(as.character(val_all$benefit), nchar)) + 4)
+  setColumnWidth(sheet_val, colIndex = c(4), colWidth = max(sapply(as.character(val_all$dalys), nchar)) + 4)
+  
+  saveWorkbook(wb, paste0("amh_model_inputs_", intervention_name,"_standard.xlsx"))
+}
+
+output_workbook(param_none, "no_interventions")
+output_workbook(param_all, "all_interventions")
+
+#param_none_old$low <- as.character(param_none_old$low)
+#param_none_old$high <- as.character(param_none_old$high)
+```
+
+```{r functions_for_revaluing}
+# set parameters that are the same as standard
+set_value_same_as_standard <- function (dataset, param_names) {
+  ifelse(dataset[, "parameter"] %in% param_names, param_all$value, dataset[, "value"])
+}
+
+# set parameters that are different from standard
+set_value_different <- function (dataset, param_name, new_value) {
+  ifelse(dataset[, "parameter"] == param_name, new_value, dataset[, "value"])
+}
+
+# set minima and maxima that are the same as standard
+set_lowhigh_same_as_standard <- function (level, dataset) {
+  diff = setdiff(dataset, param_none)
+  
+  ifelse(!(dataset[, "parameter"] %in% diff$parameter),
+         as.character(dataset[, level]),
+         ifelse(!is.na(dataset[, "psa_distribution"]),
+                param_all[, level], dataset[, level]))
+}
+
+# set minima and maxima that are different from standard
+set_lowhigh_different <- function (dataset, param_name, level, new_value) {
+  ifelse(dataset[, "parameter"] != param_name, dataset[, level], new_value)
+}
+```
+
+```{r anx_trt_group}
+## Anxiety treatment, group CBT
+param_anx_trt_group <- param_none
+
+# set parameters that are the same as standard
+param_anx_trt_group$value <- set_value_same_as_standard(param_anx_trt_group,
+  c("Pr_receive_anxiety_treatment_any", "Pr_receive_anxiety_treatment_any_adj", 
+    "OR_remission_anxiety_treatment_group",
+    grep("c_anxiety_trt_group", param_anx_trt_group$parameter, value = TRUE)))
+
+# set parameters that are different from standard
+param_anx_trt_group$value <- set_value_different(param_anx_trt_group,
+                                                 "Pr_receive_anxiety_treatment_group",
+                                                 "1")
+param_anx_trt_group$value <- set_value_different(param_anx_trt_group,
+                                                 "Pr_receive_anxiety_treatment_group_adj",
+                                                 "Pr_receive_anxiety_treatment_group * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_group$value <- set_value_different(param_anx_trt_group,
+                                                 "c_anxiety_trt_all",
+                                                 "Pr_receive_anxiety_treatment_group_adj * c_anxiety_trt_group_all_years")
+
+# set minima and maxima that are the same as standard
+param_anx_trt_group$low <- set_lowhigh_same_as_standard("low", param_anx_trt_group)
+param_anx_trt_group$high <- set_lowhigh_same_as_standard("high", param_anx_trt_group)
+
+# set minima and maxima that are different from standard
+param_anx_trt_group$low <- set_lowhigh_different(param_anx_trt_group, "Pr_receive_anxiety_treatment_group",
+                                                 "low", "1")
+param_anx_trt_group$high <- set_lowhigh_different(param_anx_trt_group, "Pr_receive_anxiety_treatment_group",
+                                                 "high", "1")
+
+param_anx_trt_group$low <- set_lowhigh_different(param_anx_trt_group, "Pr_receive_anxiety_treatment_group_adj",
+                                                 "low", "Pr_receive_anxiety_treatment_group * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_group$high <- set_lowhigh_different(param_anx_trt_group, "Pr_receive_anxiety_treatment_group_adj",
+                                                 "high", "Pr_receive_anxiety_treatment_group * Pr_receive_anxiety_treatment_any_adj")
+
+##View(setdiff(param_anx_trt_group_old, param_none_old))
+#View(setdiff(param_anx_trt_group, param_none))
+
+output_workbook(param_anx_trt_group, "anx_trt_group")
+```
+
+```{r anx_trt_internet_individual}
+## Anxiety treatment, group CBT
+param_anx_trt_individual <- param_none
+
+# set parameters that are the same as standard
+param_anx_trt_individual$value <- set_value_same_as_standard(param_anx_trt_individual,
+  c("Pr_receive_anxiety_treatment_any", "Pr_receive_anxiety_treatment_any_adj",
+    "OR_remission_anxiety_treatment_individual",
+    grep("c_anxiety_trt_individual", param_anx_trt_individual$parameter, value = TRUE)))
+
+# set parameters that are different from standard
+param_anx_trt_individual$value <- set_value_different(param_anx_trt_individual,
+                                                 "Pr_receive_anxiety_treatment_any",
+                                                 "ifelse(Pr_access_internet < 0.2, Pr_access_internet, 0.2)")
+param_anx_trt_individual$value <- set_value_different(param_anx_trt_individual,
+                                                 "Pr_receive_anxiety_treatment_individual",
+                                                 "1")
+param_anx_trt_individual$value <- set_value_different(param_anx_trt_individual,
+                                                 "Pr_receive_anxiety_treatment_individual_adj",
+                                                 "Pr_receive_anxiety_treatment_individual * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_individual$value <- set_value_different(param_anx_trt_individual,
+                                                 "c_anxiety_trt_all",
+                                                 "Pr_receive_anxiety_treatment_individual_adj * c_anxiety_trt_individual_all_years")
+
+# set minima and maxima that are the same as standard
+param_anx_trt_individual$low <- set_lowhigh_same_as_standard("low", param_anx_trt_individual)
+param_anx_trt_individual$high <- set_lowhigh_same_as_standard("high", param_anx_trt_individual)
+
+# set minima and maxima that are different from standard
+param_anx_trt_individual$low <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_any",
+                                                 "low",
+                                                 "ifelse(Pr_access_internet < 0.1, Pr_access_internet, 0.1)")
+param_anx_trt_individual$high <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_any",
+                                                 "high", 
+                                                 "ifelse(Pr_access_internet < 0.5, Pr_access_internet, 0.5)")
+
+param_anx_trt_individual$low <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_individual",
+                                                 "low", "1")
+param_anx_trt_individual$high <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_individual",
+                                                 "high", "1")
+
+param_anx_trt_individual$low <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_individual_adj",
+                                                 "low", "Pr_receive_anxiety_treatment_individual * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_individual$high <- set_lowhigh_different(param_anx_trt_individual, "Pr_receive_anxiety_treatment_individual_adj",
+                                                 "high", "Pr_receive_anxiety_treatment_individual * Pr_receive_anxiety_treatment_any_adj")
+
+#View(setdiff(param_anx_trt_individual_old, param_none_old))
+#View(setdiff(param_anx_trt_individual, param_none))
+
+output_workbook(param_anx_trt_individual, "anx_trt_internet_individual")
+```
+
+```{r anx_trt_internet_self}
+## Anxiety treatment, group CBT
+param_anx_trt_self <- param_none
+
+# set parameters that are the same as standard
+param_anx_trt_self$value <- set_value_same_as_standard(param_anx_trt_self,
+  c("Pr_receive_anxiety_treatment_any", "Pr_receive_anxiety_treatment_any_adj",
+    "OR_remission_anxiety_treatment_internet",
+    grep("c_anxiety_trt_internet", param_anx_trt_self$parameter, value = TRUE)))
+
+# set parameters that are different from standard
+param_anx_trt_self$value <- set_value_different(param_anx_trt_self,
+                                                 "Pr_receive_anxiety_treatment_any",
+                                                 "ifelse(Pr_access_internet < 0.2, Pr_access_internet, 0.2)")
+param_anx_trt_self$value <- set_value_different(param_anx_trt_self,
+                                                 "Pr_receive_anxiety_treatment_internet",
+                                                 "1")
+param_anx_trt_self$value <- set_value_different(param_anx_trt_self,
+                                                 "Pr_receive_anxiety_treatment_internet_adj",
+                                                 "Pr_receive_anxiety_treatment_internet * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_self$value <- set_value_different(param_anx_trt_self,
+                                                 "c_anxiety_trt_all",
+                                                 "Pr_receive_anxiety_treatment_internet_adj * c_anxiety_trt_internet_all_years")
+
+# set minima and maxima that are the same as standard
+param_anx_trt_self$low <- set_lowhigh_same_as_standard("low", param_anx_trt_self)
+param_anx_trt_self$high <- set_lowhigh_same_as_standard("high", param_anx_trt_self)
+
+# set minima and maxima that are different from standard
+param_anx_trt_self$low <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_any",
+                                                 "low",
+                                                 "ifelse(Pr_access_internet < 0.1, Pr_access_internet, 0.1)")
+param_anx_trt_self$high <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_any",
+                                                 "high", 
+                                                 "ifelse(Pr_access_internet < 0.5, Pr_access_internet, 0.5)")
+
+param_anx_trt_self$low <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_internet",
+                                                 "low", "1")
+param_anx_trt_self$high <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_internet",
+                                                 "high", "1")
+
+param_anx_trt_self$low <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_internet_adj",
+                                                 "low", "Pr_receive_anxiety_treatment_internet * Pr_receive_anxiety_treatment_any_adj")
+param_anx_trt_self$high <- set_lowhigh_different(param_anx_trt_self, "Pr_receive_anxiety_treatment_internet_adj",
+                                                 "high", "Pr_receive_anxiety_treatment_internet * Pr_receive_anxiety_treatment_any_adj")
+
+#View(setdiff(param_anx_trt_self_old, param_none_old))
+#View(setdiff(param_anx_trt_self, param_none))
+
+output_workbook(param_anx_trt_self, "anx_trt_internet_self")
+```
+
+```{r anxdep_prevention}
+## Anxiety treatment, group CBT
+param_anxdep_prev <- param_none
+
+# set parameters that are the same as standard
+param_anxdep_prev$value <- set_value_same_as_standard(param_anxdep_prev,
+  c(grep("c_anxdep_prevention_school", param_anxdep_prev$parameter, value = TRUE),
+    grep("RR_anxiety_prevention", param_anxdep_prev$parameter, value = TRUE),
+    grep("RR_depression_prevention", param_anxdep_prev$parameter, value = TRUE),
+    grep("RR_anxdep_prevention", param_anxdep_prev$parameter, value = TRUE),
+    "Pr_receive_anxiety_prevention", "Pr_receive_depression_prevention", "Pr_receive_anxdep_prevention",
+    "Pr_receive_anxiety_prevention_adj"))
+
+## set minima and maxima that are the same as standard
+param_anxdep_prev$low <- set_lowhigh_same_as_standard("low", param_anxdep_prev)
+param_anxdep_prev$high <- set_lowhigh_same_as_standard("high", param_anxdep_prev)
+
+#View(setdiff(param_anxdep_prev_old, param_none_old))
+#View(setdiff(param_anxdep_prev, param_none))
+
+output_workbook(param_anxdep_prev, "anxdep_prevention_school")
+```
+
+```{r dep_trt_group}
+## depression treatment, group CBT
+param_dep_trt_group <- param_none
+
+# set parameters that are the same as standard
+param_dep_trt_group$value <- set_value_same_as_standard(param_dep_trt_group,
+  c("Pr_receive_depression_mild_treatment_any", "Pr_receive_depression_mild_treatment_any_adj",
+    "RR_remission_depression_mild_treatment",
+    "RR_relapse_depression_treatment",
+    grep("c_depression_mild_trt_group", param_dep_trt_group$parameter, value = TRUE),
+    grep("c_anxiety_trt_group", param_dep_trt_group$parameter, value = TRUE),
+    "c_depression_mild_trt"))
+
+# set parameters that are different from standard
+param_dep_trt_group$value <- set_value_different(param_dep_trt_group,
+                                                 "Pr_receive_depression_mild_treatment_group",
+                                                 "1")
+param_dep_trt_group$value <- set_value_different(param_dep_trt_group,
+                                                 "Pr_receive_depression_mild_treatment_group_adj",
+                                                 "Pr_receive_depression_mild_treatment_group * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_group$value <- set_value_different(param_dep_trt_group,
+                                                 "c_depression_mild_trt_all",
+                                                 "Pr_receive_depression_mild_treatment_group_adj * c_depression_mild_trt_group_all_years")
+
+# set minima and maxima that are the same as standard
+param_dep_trt_group$low <- set_lowhigh_same_as_standard("low", param_dep_trt_group)
+param_dep_trt_group$high <- set_lowhigh_same_as_standard("high", param_dep_trt_group)
+
+# set minima and maxima that are different from standard
+param_dep_trt_group$low <- set_lowhigh_different(param_dep_trt_group, "Pr_receive_depression_mild_treatment_group",
+                                                 "low", "1")
+param_dep_trt_group$high <- set_lowhigh_different(param_dep_trt_group, "Pr_receive_depression_mild_treatment_group",
+                                                 "high", "1")
+
+param_dep_trt_group$low <- set_lowhigh_different(param_dep_trt_group, "Pr_receive_depression_mild_treatment_group_adj",
+                                                 "low", "Pr_receive_depression_mild_treatment_group * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_group$high <- set_lowhigh_different(param_dep_trt_group, "Pr_receive_depression_mild_treatment_group_adj",
+                                                 "high", "Pr_receive_depression_mild_treatment_group * Pr_receive_depression_mild_treatment_any_adj")
+
+#View(setdiff(param_dep_trt_group_old, param_none_old))
+#View(setdiff(param_dep_trt_group, param_none))
+
+output_workbook(param_dep_trt_group, "dep_mild_trt_group")
+```
+
+```{r dep_trt_individual}
+## depression treatment, individual CBT
+param_dep_trt_individual <- param_none
+
+# set parameters that are the same as standard
+param_dep_trt_individual$value <- set_value_same_as_standard(param_dep_trt_individual,
+  c("Pr_receive_depression_mild_treatment_any", "Pr_receive_depression_mild_treatment_any_adj",
+    "RR_remission_depression_mild_treatment",
+    "RR_relapse_depression_treatment",
+    grep("c_depression_mild_trt_individual", param_dep_trt_individual$parameter, value = TRUE),
+    grep("c_anxiety_trt_individual", param_dep_trt_individual$parameter, value = TRUE),
+    "c_depression_mild_trt"))
+
+# set parameters that are different from standard
+param_dep_trt_individual$value <- set_value_different(param_dep_trt_individual,
+                                                 "Pr_receive_depression_screening",
+                                                 "0.2 * Pr_in_school")
+param_dep_trt_individual$value <- set_value_different(param_dep_trt_individual,
+                                                 "Pr_receive_depression_mild_treatment_any",
+                                                 "ifelse(Pr_access_internet < 0.2, Pr_access_internet, 0.2)")
+param_dep_trt_individual$value <- set_value_different(param_dep_trt_individual,
+                                                 "Pr_receive_depression_mild_treatment_individual",
+                                                 "1")
+param_dep_trt_individual$value <- set_value_different(param_dep_trt_individual,
+                                                 "Pr_receive_depression_mild_treatment_individual_adj",
+                                                 "Pr_receive_depression_mild_treatment_individual * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_individual$value <- set_value_different(param_dep_trt_individual,
+                                                 "c_depression_mild_trt_all",
+                                                 "Pr_receive_depression_mild_treatment_individual_adj * c_depression_mild_trt_individual_all_years")
+
+# set minima and maxima that are the same as standard
+param_dep_trt_individual$low <- set_lowhigh_same_as_standard("low", param_dep_trt_individual)
+param_dep_trt_individual$high <- set_lowhigh_same_as_standard("high", param_dep_trt_individual)
+
+# set minima and maxima that are different from standard
+param_dep_trt_individual$low <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_individual",
+                                                 "low", "1")
+param_dep_trt_individual$high <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_individual",
+                                                 "high", "1")
+
+param_dep_trt_individual$low <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_individual_adj",
+                                                 "low", "Pr_receive_depression_mild_treatment_individual * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_individual$high <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_individual_adj",
+                                                 "high", "Pr_receive_depression_mild_treatment_individual * Pr_receive_depression_mild_treatment_any_adj")
+
+param_dep_trt_individual$low <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_any",
+                                                 "low",
+                                                 "ifelse(Pr_access_internet < 0.1, Pr_access_internet, 0.1)")
+param_dep_trt_individual$high <- set_lowhigh_different(param_dep_trt_individual, "Pr_receive_depression_mild_treatment_any",
+                                                 "high", 
+                                                 "ifelse(Pr_access_internet < 0.5, Pr_access_internet, 0.5)")
+
+#View(setdiff(param_dep_trt_individual_old, param_none_old))
+#View(setdiff(param_dep_trt_individual, param_none))
+
+output_workbook(param_dep_trt_individual, "dep_mild_trt_internet_individual")
+```
+
+```{r dep_trt_self}
+## depression treatment, guided self-help
+param_dep_trt_self <- param_none
+
+# set parameters that are the same as standard
+param_dep_trt_self$value <- set_value_same_as_standard(param_dep_trt_self,
+  c("Pr_receive_depression_mild_treatment_any", "Pr_receive_depression_mild_treatment_any_adj",
+    "RR_remission_depression_mild_treatment",
+    "RR_relapse_depression_treatment",
+    grep("c_depression_mild_trt_internet", param_dep_trt_self$parameter, value = TRUE),
+    grep("c_anxiety_trt_internet", param_dep_trt_self$parameter, value = TRUE),
+    "c_depression_mild_trt"))
+
+# set parameters that are different from standard
+param_dep_trt_self$value <- set_value_different(param_dep_trt_self,
+                                                 "Pr_receive_depression_mild_treatment_any",
+                                                 "ifelse(Pr_access_internet < 0.2, Pr_access_internet, 0.2)")
+param_dep_trt_self$value <- set_value_different(param_dep_trt_self,
+                                                 "Pr_receive_depression_mild_treatment_internet",
+                                                 "1")
+param_dep_trt_self$value <- set_value_different(param_dep_trt_self,
+                                                 "Pr_receive_depression_mild_treatment_internet_adj",
+                                                 "Pr_receive_depression_mild_treatment_internet * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_self$value <- set_value_different(param_dep_trt_self,
+                                                 "c_depression_mild_trt_all",
+                                                 "Pr_receive_depression_mild_treatment_internet_adj * c_depression_mild_trt_internet_all_years")
+
+# set minima and maxima that are the same as standard
+param_dep_trt_self$low <- set_lowhigh_same_as_standard("low", param_dep_trt_self)
+param_dep_trt_self$high <- set_lowhigh_same_as_standard("high", param_dep_trt_self)
+
+# set minima and maxima that are different from standard
+param_dep_trt_self$low <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_internet",
+                                                 "low", "1")
+param_dep_trt_self$high <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_internet",
+                                                 "high", "1")
+
+param_dep_trt_self$low <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_internet_adj",
+                                                 "low", "Pr_receive_depression_mild_treatment_internet * Pr_receive_depression_mild_treatment_any_adj")
+param_dep_trt_self$high <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_internet_adj",
+                                                 "high", "Pr_receive_depression_mild_treatment_internet * Pr_receive_depression_mild_treatment_any_adj")
+
+param_dep_trt_self$low <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_any",
+                                                 "low",
+                                                 "ifelse(Pr_access_internet < 0.1, Pr_access_internet, 0.1)")
+param_dep_trt_self$high <- set_lowhigh_different(param_dep_trt_self, "Pr_receive_depression_mild_treatment_any",
+                                                 "high", 
+                                                 "ifelse(Pr_access_internet < 0.5, Pr_access_internet, 0.5)")
+
+#View(setdiff(param_dep_trt_self_old, param_none_old))
+#View(setdiff(param_dep_trt_self, param_none))
+
+output_workbook(param_dep_trt_self, "dep_mild_trt_internet_self")
+```
+
+```{r dep_severe_trt}
+## CBT and medication for severe depression
+param_dep_severe_trt <- param_none
+
+# set parameters that are the same as standard
+param_dep_severe_trt$value <- set_value_same_as_standard(param_dep_severe_trt,
+  c("OR_remission_depression_severe_treatment", "Pr_receive_depression_severe_treatment",
+    "Pr_receive_depression_severe_treatment_adj",
+    grep("c_depression_severe_trt", param_dep_severe_trt$parameter, value = TRUE)))
+
+## set minima and maxima that are the same as standard
+param_dep_severe_trt$low <- set_lowhigh_same_as_standard("low", param_dep_severe_trt)
+param_dep_severe_trt$high <- set_lowhigh_same_as_standard("high", param_dep_severe_trt)
+
+#View(setdiff(param_dep_trt_severe_old, param_none_old))
+#View(setdiff(param_dep_severe_trt, param_none))
+
+output_workbook(param_dep_severe_trt, "dep_severe_trt")
+```
+
+```{r dep_indicated_prevention}
+## depression treatment, guided self-help
+param_dep_indicated_prev <- param_none
+
+# set parameters that are the same as standard
+param_dep_indicated_prev$value <- set_value_same_as_standard(param_dep_indicated_prev,
+  c("Pr_receive_anxiety_prevention", "Pr_receive_anxiety_prevention_adj", 
+    "Pr_receive_depression_prevention",
+    "Pr_receive_depression_indicated_prevention",
+    "Pr_receive_depression_screening",
+    "Pr_receive_anxdep_indicated_depression",
+    grep("RR_depression_indicated_prevention", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_depression_screening", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_anxiety_trt_group", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_depression_indicated_prevention", param_dep_indicated_prev$parameter, value = TRUE)))
+
+# set minima and maxima that are the same as standard
+param_dep_indicated_prev$low <- set_lowhigh_same_as_standard("low", param_dep_indicated_prev)
+param_dep_indicated_prev$high <- set_lowhigh_same_as_standard("high", param_dep_indicated_prev)
+
+#View(setdiff(param_dep_indicated_prev_old, param_none_old))
+#View(setdiff(param_dep_indicated_prev, param_none))
+
+output_workbook(param_dep_indicated_prev, "dep_indicated_prevention")
+```
+
+```{r bip_trt}
+## Treatment of bipolar disorder
+param_bip_trt <- param_none
+
+# set parameters that are the same as standard
+param_bip_trt$value <- set_value_same_as_standard(param_bip_trt,
+  c("HR_bipolar_depression_treatment", "Pr_receive_bipolar_treatment", 
+    "Pr_receive_bipolar_treatment_adj", 
+    "Pr_receive_bipolar_depression_treatment",
+    grep("c_bipolar_trt", param_bip_trt$parameter, value = TRUE)))
+
+## set minima and maxima that are the same as standard
+param_bip_trt$low <- set_lowhigh_same_as_standard("low", param_bip_trt)
+param_bip_trt$high <- set_lowhigh_same_as_standard("high", param_bip_trt)
+
+#View(setdiff(param_bip_trt_old, param_none_old))
+#View(setdiff(param_bip_trt, param_none))
+
+output_workbook(param_bip_trt, "bip_all_trt")
+```
+
+```{r suicide_prevention_school}
+## Suicide prevention in schools
+param_suicide_prev_school <- param_none
+
+# set parameters that are the same as standard
+param_suicide_prev_school$value <- set_value_same_as_standard(param_suicide_prev_school,
+  c(grep("c_suicide_prevention_school", param_suicide_prev_school$parameter, value = TRUE),
+    grep("OR_suicide_prevention", param_suicide_prev_school$parameter, value = TRUE),
+    "Pr_receive_suicide_prevention", "Pr_receive_suicide_prevention_adj", 
+    "Pr_suicide_not_mh_w_self_harm_invest"))
+
+## set minima and maxima that are the same as standard
+param_suicide_prev_school$low <- set_lowhigh_same_as_standard("low", param_suicide_prev_school)
+param_suicide_prev_school$high <- set_lowhigh_same_as_standard("high", param_suicide_prev_school)
+
+#View(setdiff(param_suicide_prev_school_old, param_none_old))
+#View(setdiff(param_suicide_prev_school, param_none))
+
+output_workbook(param_suicide_prev_school, "suicide_prevention_school")
+```
+
+```{r suicide_prevention_hospital}
+## Suicide prevention after self-harm in hospital
+param_suicide_prev_hospital <- param_none
+
+# set parameters that are the same as standard
+param_suicide_prev_hospital$value <- set_value_same_as_standard(param_suicide_prev_hospital,
+  c(grep("c_suicide_prevention_hospital", param_suicide_prev_hospital$parameter, value = TRUE),
+    grep("RR_suicide_after_self_harm", param_suicide_prev_hospital$parameter, value = TRUE),
+    "Pr_hospitalized_self_harm", "Pr_suicide_not_mh_w_self_harm_invest", "Pr_hospitalized_receive_prevention_self_harm",
+    "RR_suicide_follow_up_self_harm", "Pr_receive_suicide_follow_up_self_harm"))
+
+## set minima and maxima that are the same as standard
+param_suicide_prev_hospital$low <- set_lowhigh_same_as_standard("low", param_suicide_prev_hospital)
+param_suicide_prev_hospital$high <- set_lowhigh_same_as_standard("high", param_suicide_prev_hospital)
+
+#param_suicide_prev_hospital_old$low <- as.character(param_suicide_prev_hospital_old$low)
+#param_suicide_prev_hospital_old$high <- as.character(param_suicide_prev_hospital_old$high)
+
+#View(setdiff(param_suicide_prev_hospital_old, param_none_old))
+#View(setdiff(param_suicide_prev_hospital, param_none))
+
+output_workbook(param_suicide_prev_hospital, "suicide_prevention_hospital")
+```
+
+```{r school_interventions}
+## Anxiety treatment, group CBT
+param_schools <- param_none
+
+# set parameters that are the same as standard
+param_schools$value <- set_value_same_as_standard(param_schools,
+  c(grep("c_anxdep_prevention_school", param_schools$parameter, value = TRUE),
+    grep("RR_anxiety_prevention", param_schools$parameter, value = TRUE),
+    grep("RR_depression_prevention", param_schools$parameter, value = TRUE),
+    grep("RR_anxdep_prevention", param_schools$parameter, value = TRUE),
+    "Pr_receive_anxiety_prevention", "Pr_receive_anxiety_prevention_adj",
+    "Pr_receive_depression_prevention", "Pr_receive_anxdep_prevention", "Pr_receive_depression_indicated_prevention",
+    "Pr_receive_depression_screening",
+    grep("RR_anxdep_indicated_prevention", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_depression_screening", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_anxiety_trt_group", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_depression_indicated_prevention", param_dep_indicated_prev$parameter, value = TRUE),
+    grep("c_suicide_prevention_school", param_suicide_prev_school$parameter, value = TRUE),
+    grep("OR_suicide_prevention", param_suicide_prev_school$parameter, value = TRUE),
+    "Pr_receive_suicide_prevention", "Pr_receive_suicide_prevention_adj",
+    "Pr_suicide_not_mh_w_self_harm_invest"))
+
+## set minima and maxima that are the same as standard
+param_schools$low <- set_lowhigh_same_as_standard("low", param_schools)
+param_schools$high <- set_lowhigh_same_as_standard("high", param_schools)
+
+#View(setdiff(param_schools_old, param_none_old))
+#View(setdiff(param_schools, param_none))
+
+output_workbook(param_schools, "school_based_interventions")
+```

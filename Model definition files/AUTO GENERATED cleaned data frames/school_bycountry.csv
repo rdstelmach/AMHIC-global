@@ -1,0 +1,73 @@
+"wb_income_level","country","who_region_name","sex","year","perc_not_in_school","Pr_not_in_school","Pr_in_school"
+"High","Japan","WPRO","Female",2018,4.95799,0.0495799,0.9504201
+"High","Japan","WPRO","Male",2018,5.26873,0.0526873,0.9473127
+"Low","Afghanistan","EMRO","Female",2018,51.77045,0.5177045,0.4822955
+"Low","Afghanistan","EMRO","Male",2018,44.89253,0.4489253,0.5510747
+"Low","Democratic Republic of the Congo","AFRO","Female",2018,51.77045,0.5177045,0.4822955
+"Low","Democratic Republic of the Congo","AFRO","Male",2018,44.89253,0.4489253,0.5510747
+"Low","Uganda","AFRO","Female",2018,51.77045,0.5177045,0.4822955
+"Low","Uganda","AFRO","Male",2018,44.89253,0.4489253,0.5510747
+"Lower middle","United Republic of Tanzania","AFRO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","United Republic of Tanzania","AFRO","Male",2018,30.92559,0.3092559,0.6907441
+"Lower middle","Bangladesh","SEARO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","Bangladesh","SEARO","Male",2018,30.92559,0.3092559,0.6907441
+"Lower middle","Kenya","AFRO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","Kenya","AFRO","Male",2018,30.92559,0.3092559,0.6907441
+"Lower middle","Algeria","AFRO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","Algeria","AFRO","Male",2018,30.92559,0.3092559,0.6907441
+"Lower middle","Nigeria","AFRO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","Nigeria","AFRO","Male",2018,30.92559,0.3092559,0.6907441
+"Lower middle","Viet Nam","WPRO","Female",2018,31.14952,0.3114952,0.6885048
+"Lower middle","Viet Nam","WPRO","Male",2018,30.92559,0.3092559,0.6907441
+"Upper middle","Iraq","EMRO","Male",2018,14.30581,0.1430581,0.8569419
+"Upper middle","Iraq","EMRO","Female",2018,11.7673,0.117673,0.882327
+"Upper middle","China","WPRO","Male",2018,14.30581,0.1430581,0.8569419
+"Upper middle","China","WPRO","Female",2018,11.7673,0.117673,0.882327
+NA,"Argentina",NA,"Female",2018,3.53523,0.0353523,0.9646477
+NA,"Argentina",NA,"Male",2018,7.64514,0.0764514,0.9235486
+NA,"Brazil",NA,"Female",2018,8.00936,0.0800936,0.9199064
+NA,"Brazil",NA,"Male",2018,7.93992,0.0793992,0.9206008
+NA,"Colombia",NA,"Female",2019,8.11762,0.0811762,0.9188238
+NA,"Colombia",NA,"Male",2019,9.6368,0.096368,0.903632
+NA,"Egypt",NA,"Male",2019,12.74779,0.1274779,0.8725221
+NA,"Egypt",NA,"Female",2019,12.66747,0.1266747,0.8733253
+NA,"Ethiopia",NA,"Male",2015,53.73335,0.5373335,0.4626665
+NA,"Ethiopia",NA,"Female",2015,57.39453,0.5739453,0.4260547
+NA,"France",NA,"Female",2018,2.15102,0.0215102,0.9784898
+NA,"France",NA,"Male",2018,2.68822,0.0268822,0.9731178
+NA,"Germany",NA,"Female",2018,7.95199,0.0795199,0.9204801
+NA,"Germany",NA,"Male",2018,7.91963,0.0791963,0.9208037
+NA,"India",NA,"Female",2013,32.4723,0.324723,0.675277
+NA,"India",NA,"Male",2013,34.53727,0.3453727,0.6546273
+NA,"Indonesia",NA,"Female",2018,17.84306,0.1784306,0.8215694
+NA,"Indonesia",NA,"Male",2018,20.90084,0.2090084,0.7909916
+NA,"Iran (Islamic Republic of)",NA,"Female",2017,16.86963,0.1686963,0.8313037
+NA,"Iran (Islamic Republic of)",NA,"Male",2017,13.91113,0.1391113,0.8608887
+NA,"Italy",NA,"Female",2018,3.95949,0.0395949,0.9604051
+NA,"Italy",NA,"Male",2018,4.36001,0.0436001,0.9563999
+NA,"Mexico",NA,"Female",2018,15.56988,0.1556988,0.8443012
+NA,"Mexico",NA,"Male",2018,18.25138,0.1825138,0.8174862
+NA,"Morocco",NA,"Female",2019,20.65504,0.2065504,0.7934496
+NA,"Morocco",NA,"Male",2019,16.49363,0.1649363,0.8350637
+NA,"Mozambique",NA,"Female",2015,56.85029,0.5685029,0.4314971
+NA,"Mozambique",NA,"Male",2015,48.65487,0.4865487,0.5134513
+NA,"Pakistan",NA,"Female",2018,48.05173,0.4805173,0.5194827
+NA,"Pakistan",NA,"Male",2018,38.95113,0.3895113,0.6104887
+NA,"Philippines",NA,"Female",2015,7.66426,0.0766426,0.9233574
+NA,"Philippines",NA,"Male",2015,12.40611,0.1240611,0.8759389
+NA,"Russian Federation",NA,"Male",2018,1.21073,0.0121073,0.9878927
+NA,"Russian Federation",NA,"Female",2018,0.78142,0.0078142,0.9921858
+NA,"South Africa",NA,"Female",2018,17.06144,0.1706144,0.8293856
+NA,"South Africa",NA,"Male",2018,19.14444,0.1914444,0.8085556
+NA,"Sudan",NA,"Female",2018,43.82538,0.4382538,0.5617462
+NA,"Sudan",NA,"Male",2018,45.10105,0.4510105,0.5489895
+NA,"Thailand",NA,"Male",2015,16.13053,0.1613053,0.8386947
+NA,"Thailand",NA,"Female",2015,17.23044,0.1723044,0.8276956
+NA,"Turkey",NA,"Male",2018,11.21643,0.1121643,0.8878357
+NA,"Turkey",NA,"Female",2018,12.05735,0.1205735,0.8794265
+NA,"United Kingdom",NA,"Female",2018,2.40159,0.0240159,0.9759841
+NA,"United Kingdom",NA,"Male",2018,2.70188,0.0270188,0.9729812
+NA,"United States of America",NA,"Female",2018,1.73821,0.0173821,0.9826179
+NA,"United States of America",NA,"Male",2018,2.18752,0.0218752,0.9781248
+NA,"Yemen",NA,"Female",2016,50.61238,0.5061238,0.4938762
+NA,"Yemen",NA,"Male",2016,33.78968,0.3378968,0.6621032
