@@ -1,0 +1,1207 @@
+---
+title: "Adolescent mental health"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup}
+library(data.table)
+library(heemod)
+library(reshape2)
+library(plyr)
+library(ggplot2)
+library(scales)
+library(xlsx)
+library(mc2d)
+library(triangle)
+library(stringr)
+library(beepr)
+
+# read in Global Burden of Disease DALYs data
+# source Global Burden of Disease Collaborative Network.
+# Global Burden of Disease Study 2019 (GBD 2019) Results.
+# Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2020.
+# Available from http://ghdx.healthdata.org/gbd-results-tool.
+gbd_raw <- read.csv("Raw model input files/GBD 2019 starting data.csv")
+
+# read in incidence by year data
+# source Global Burden of Disease Collaborative Network.
+# Global Burden of Disease Study 2019 (GBD 2019) Results.
+# Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2020.
+# Available from http://ghdx.healthdata.org/gbd-results-tool.
+inc_raw <- read.csv("Raw model input files/GBD 2019 incidence data.csv")
+
+# read in suicide data
+# source Global Burden of Disease Collaborative Network.
+# Global Burden of Disease Study 2019 (GBD 2019) Results.
+# Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2020.
+# Available from http://ghdx.healthdata.org/gbd-results-tool.
+suicide_raw <- read.csv("Raw model input files/GBD 2019 suicide data.csv")
+
+# read in background morbidity data
+# source Global Burden of Disease Collaborative Network.
+# Global Burden of Disease Study 2019 (GBD 2019) Results.
+# Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2020.
+# Available from http://ghdx.healthdata.org/gbd-results-tool.
+bg_morbidity_raw <- read.csv("Raw model input files/GBD 2019 background morbidity.csv")
+
+# read in UNPD population data
+# source United Nations Population Division, “World Population Prospects,” 2019, https://population.un.org/wpp/Download/Standard/CSV/.
+unpd_raw <- read.csv("Raw model input files/WPP2019_PopulationBySingleAgeSex_1950-2019.csv")
+
+# read in life table data
+# source United Nations Population Division, “World Population Prospects,” 2019, https://population.un.org/wpp/Download/Standard/CSV/.
+life_table_raw <- read.csv("Raw model input files/WPP2019_Life_Table_Medium.csv")
+
+# read in World Bank historical income levels
+world_bank_raw <- read.xlsx("Raw model input files/World Bank income levels.xlsx",
+                        sheetName = "Country Analytical History",
+                        rowIndex = c(6, 12:229),
+                        colIndex = 2:35)
+
+# read in WHO regions
+who_raw <- read.csv("Raw model input files/WHO regions.csv")
+
+# read in school data
+# source UNESCO Institute for Statistics, May 2021, http://data.uis.unesco.org/index.aspx?queryid=121
+school_F_bycountry_raw <- read.xlsx("Raw model input files/UIS out of school rate F.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 6:246),
+                                    colIndex = c(1, 3:9))
+school_M_bycountry_raw <- read.xlsx("Raw model input files/UIS out of school rate M.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 6:246),
+                                    colIndex = c(1, 3:9))
+school_F_byWBincome_raw <- read.xlsx("Raw model input files/UIS out of school rate F.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 281:285),
+                                    colIndex = c(1, 3:9))
+school_M_byWBincome_raw <- read.xlsx("Raw model input files/UIS out of school rate M.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 281:285),
+                                    colIndex = c(1, 3:9))
+
+# the updated files contain fewer countries, so want to update only the countries included in
+# the new version w/o losing the data on the countries in the old dataset
+school_F_bycountry_2021_raw <- read.xlsx("Raw model input files/UIS out of school rate F 2021 update.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 6:155),
+                                    colIndex = c(1, 3:9))
+school_M_bycountry_2021_raw <- read.xlsx("Raw model input files/UIS out of school rate M 2021 update.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 6:155),
+                                    colIndex = c(1, 3:9))
+school_F_byWBincome_2021_raw <- read.xlsx("Raw model input files/UIS out of school rate F 2021 update.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 187:191),
+                                    colIndex = c(1, 3:9))
+school_M_byWBincome_2021_raw <- read.xlsx("Raw model input files/UIS out of school rate M 2021 update.xlsx", 
+                                    sheetIndex = 1, rowIndex = c(4, 187:191),
+                                    colIndex = c(1, 3:9))
+
+# read in Internet data
+internet_raw <- read.xlsx("Raw model input files/World Bank Internet access.xlsx",
+                          sheetIndex = 1, startRow = 4)
+
+# read in GDP per capita using "current" USD
+# the "current" value in USD does not change based on downloading year (same in 2020 and 2021)
+# so "current" means current to the year in question
+# source https://data.worldbank.org/indicator/NY.GDP.PCAP.KD
+gdp_per_cap_raw <- read.xlsx("Raw model input files/World Bank GDP per capita current USD.xlsx",
+                             sheetIndex = 1, startRow = 4)
+
+# read in World Bank lowest decile income/consumption information
+# source http://iresearch.worldbank.org/PovcalNet/povOnDemand.aspx
+income_lowest_10_raw <- read.xlsx("Raw model input files/World Bank lowest decile income.xlsx",
+                                  sheetIndex = 1)
+
+# read in World Bank GDP deflator data for local currencies
+gdp_deflator_lcu_raw <- read.xlsx("Raw model input files/World Bank GDP deflators local currencies.xlsx",
+                              sheetIndex = 1, startRow = 4)
+
+# read in World Bank PPP conversion ratios for private consumption
+# https://data.worldbank.org/indicator/PA.NUS.PRVT.PP
+ppp_private_conversion_raw <- read.xlsx("Raw model input files/World Bank PPP conversion factor private consumption.xlsx",
+                                sheetIndex = 1, startRow = 4)
+
+# read in World Bank PPP conversion ratios for GDP
+# https://data.worldbank.org/indicator/PA.NUS.PPP
+ppp_gdp_conversion_raw <- read.xlsx("Raw model input files/World Bank PPP conversion factor GDP.xlsx",
+                                sheetIndex = 1, startRow = 4)
+
+# read in consumer price index
+# https://data.worldbank.org/indicator/FP.CPI.TOTL
+cpi_raw <- read.xlsx("Raw model input files/World Bank consumer price index.xlsx",
+                                sheetIndex = 1, startRow = 4)
+
+# read in expected increase in income from 1 year of education
+# source Montenegro 2014
+# http://documents1.worldbank.org/curated/en/830831468147839247/pdf/WPS7020.pdf
+return_to_edu_raw <- read.xlsx("Raw model input files/Montenegro returns to education.xlsx",
+                                    sheetIndex = 1)
+
+# read in expected length of time in primary and secondary school
+time_primary_raw <- read.xlsx("Raw model input files/UIS years of primary education.xlsx",
+                              sheetIndex = 1, rowIndex = c(4, 6:246))
+time_secondary_raw <- read.xlsx("Raw model input files/UIS years of secondary education.xlsx",
+                              sheetIndex = 1, rowIndex = c(4, 6:246))
+
+# read in number of people (in thousands) in labor force with each level of education by age
+# https://www.ilo.org/shinyapps/bulkexplorer34/?lang=en&segment=indicator&id=EAP_TEAP_SEX_AGE_EDU_NB_A&ref_area=AFG+ALB+DZA+AGO+AIA+ARG+ARM+ABW+AUS+AUT+AZE+BHS+BHR+BGD+BRB+BLR+BEL+BLZ+BEN+BMU+BTN+BOL+BIH+BWA+BRA+BRN+BGR+BFA+BDI+KHM+CMR+CAN+CPV+CYM+TCD+CHL+COL+COM+COG+COD+COK+CRI+HRV+CUB+CUW+CYP+CZE+CIV+DNK+DJI+DMA+DOM+ECU+EGY+SLV+EST+SWZ+ETH+FLK+FJI+FIN+FRA+GUF+PYF+GMB+GEO+DEU+GHA+GRC+GRL+GLP+GTM+GIN+GUY+HTI+HND+HKG+HUN+ISL+IND+IDN+IRN+IRQ+IRL+ISR+ITA+JPN+JOR+KAZ+KEN+KIR+KOR+KOS+KWT+KGZ+LAO+LVA+LBN+LSO+LBR+LTU+LUX+MAC+MDG+MWI+MYS+MDV+MLI+MLT+MTQ+MRT+MUS+MEX+FSM+MDA+MCO+MNG+MNE+MSR+MAR+MOZ+MMR+NAM+NRU+NPL+NLD+ANT+NCL+NZL+NIC+NER+NGA+MKD+NOR+PSE+OMN+PAK+PLW+PAN+PNG+PRY+PER+PHL+POL+PRT+PRI+QAT+ROU+RUS+RWA+REU+KNA+LCA+VCT+WSM+SMR+SAU+SEN+SRB+SYC+SLE+SGP+SVK+SVN+SLB+ZAF+ESP+LKA+SDN+SUR+SWE+CHE+TWN+TJK+TZA+THA+TLS+TGO+TON+TTO+TUN+TUR+TUV+UGA+UKR+ARE+GBR+USA+URY+UZB+VUT+VEN+VNM+YEM+ZMB+ZWE&sex=SEX_M+SEX_F&classif1=AGE_10YRBANDS_Y15-24+AGE_10YRBANDS_Y25-34+AGE_10YRBANDS_Y35-44+AGE_10YRBANDS_Y45-54+AGE_10YRBANDS_Y55-64+AGE_10YRBANDS_YGE65&classif2=EDU_AGGREGATE_LTB+EDU_AGGREGATE_BAS+EDU_AGGREGATE_INT+EDU_AGGREGATE_ADV&timefrom=2010&timeto=2020
+pr_edu_raw <- read.csv("Raw model input files/ILOSTAT education statistics.csv")
+
+# read in probability of employment by education level
+# https://www.ilo.org/shinyapps/bulkexplorer34/?lang=en&segment=indicator&id=EMP_DWAP_SEX_AGE_EDU_RT_A&ref_area=AFG+ALB+AGO+ARG+ARM+AUT+BGD+BRB+BEL+BLZ+BEN+BOL+BIH+BWA+BRA+BRN+BGR+BFA+BDI+KHM+CMR+CAN+CPV+TCD+CHL+COL+COM+COG+COD+COK+CRI+HRV+CYP+CZE+CIV+DNK+DJI+DOM+ECU+EGY+SLV+EST+SWZ+ETH+FJI+FIN+FRA+GMB+GEO+DEU+GHA+GRC+GTM+GIN+GUY+HTI+HND+HKG+HUN+ISL+IND+IDN+IRN+IRQ+IRL+ISR+ITA+JOR+KEN+KIR+KOR+KOS+LAO+LVA+LBN+LSO+LBR+LTU+LUX+MDG+MWI+MDV+MLI+MLT+MRT+MUS+MEX+FSM+MDA+MNG+MNE+MSR+MOZ+MMR+NAM+NRU+NPL+NLD+NIC+NER+NGA+MKD+NOR+PSE+PAK+PLW+PAN+PNG+PRY+PER+POL+PRT+ROU+RUS+RWA+LCA+WSM+SEN+SRB+SYC+SLE+SVK+SVN+SLB+ZAF+ESP+LKA+SDN+SUR+SWE+CHE+TJK+TZA+THA+TLS+TGO+TON+TTO+TUN+TUR+TUV+UGA+UKR+ARE+GBR+USA+URY+VUT+VEN+VNM+YEM+ZMB+ZWE&sex=SEX_M+SEX_F&classif1=AGE_10YRBANDS_Y15-24+AGE_10YRBANDS_Y25-34+AGE_10YRBANDS_Y35-44+AGE_10YRBANDS_Y45-54+AGE_10YRBANDS_Y55-64+AGE_10YRBANDS_YGE65&classif2=EDU_AGGREGATE_LTB+EDU_AGGREGATE_BAS+EDU_AGGREGATE_INT+EDU_AGGREGATE_ADV&timefrom=2010&timeto=2019
+pr_emp_edu_raw <- read.csv("Raw model input files/ILOSTAT employment to population ratio by education level.csv")
+
+# read in intervention ingredients costs
+# multiple sources
+inter_costs_raw <- read.xlsx("Raw model input files/Intervention Costs 20210423.xlsx",
+                             sheetIndex = 1, startRow = 3)
+
+# read in intervention unit counts
+# multiple sources
+inter_counts_raw <- read.xlsx("Raw model input files/Intervention unit counts.xlsx",
+                              sheetIndex = 1, startRow = 5, colIndex = c(1, 80:113))
+
+# read in working days lost due to illness
+# source Alonso J, Petukhova M, Vilagut G, et al. Days out of role due to common physical and mental conditions: results from the WHO World Mental Health surveys. Mol Psychiatry. 2011;16(12):1234-1246. doi:10.1038/mp.2010.101
+days_lost_raw <- read.xlsx("Raw model input files/Alonso 2011 days lost due to illness.xlsx",
+                           sheetIndex = 1)
+```
+
+```{r summarize}
+gbd <- setDT(gbd_raw)
+
+causes_no_duplications <- c("Self-harm", "Major depressive disorder", 
+                            "Bipolar disorder", "Anxiety disorders")
+
+# get summary of DALYs for 5 disorders by country, avoiding double-counting
+# data includes ages 10-14 and 15-19 as separate rows
+country <- gbd[measure_name == "DALYs (Disability-Adjusted Life Years)" &
+             sex_name == "Both" &
+             metric_name == "Number" &
+             cause_name %in% causes_no_duplications,
+           .(dalys_point = sum(val), dalys_upper = sum(upper), dalys_lower = sum(lower)),
+           by = .(location_name)]
+
+# sort the data.frame by number of dalys and calculate the cumulative sum
+country <- country[order(-dalys_point)]
+country <- country[, .cum_perc_dalys := cumsum(dalys_point) / sum(dalys_point)]
+
+# get countries that make up 80% of burden of disease, as measured by DALYs
+our_countries <- as.character(country[.cum_perc_dalys < 0.8, location_name])
+
+# need to change the list of countries to be the same as in 2017
+our_countries <- c(our_countries[!our_countries %in% c("Uzbekistan", "Angola", "Myanmar", "Spain")], "Thailand")
+```
+
+```{r get_age_cohort}
+# keep only 2019 population data for this cohort
+unpd <- data.table(unpd_raw)
+
+unpd <- unpd[Location %in% c(our_countries) & 
+               Time == 2019 &
+               AgeGrp >= 10 & AgeGrp <= 19]
+unpd$PopFemale <- unpd$PopFemale * 1000
+unpd$PopMale <- unpd$PopMale * 1000
+unpd <- unpd[, c("Location", "Time", "AgeGrp", "PopMale", "PopFemale")]
+
+# make long for use
+unpd <- reshape2::melt(unpd, id.vars = c("Location", "Time", "AgeGrp"), 
+             variable.name = "Sex", value.name = "n_pop")
+unpd$Sex <- gsub("Pop", "", unpd$Sex)
+```
+
+```{r get_mortality}
+life_table <- data.table(life_table_raw)
+
+# get life_table countries to match
+
+life_table <- life_table[Location %in% our_countries &
+                         Time == "2015-2020" & AgeGrpStart >= 10 & 
+                         Sex != "Total"]
+life_table <- life_table[, c("Location", "Sex", "AgeGrp", "AgeGrpStart", "qx")]
+
+# abridged life table give 5-year probabilities of death; calculate 1-month instead
+life_table$monthly_pr_die <- 1 - (1 - life_table$qx)^(1/60)
+
+# set NA to 1; i.e. if make it to 100, die
+life_table$monthly_pr_die <- ifelse(is.na(life_table$monthly_pr_die), 1,
+                                   life_table$monthly_pr_die)
+
+# needs to be a data.frame for look_up to work
+life_table <- as.data.frame(life_table)
+```
+
+```{r get_starting_prevalences}
+prev_start <- gbd[location_name %in% our_countries &
+                  measure_name == "Prevalence" &
+                  sex_name %in% c("Male", "Female") &
+                  cause_name %in% causes_no_duplications &
+                  metric_name == "Rate"]
+prev_start <- prev_start[, c("location_name", "sex_name", "age_name", "cause_name",
+                             "val", "upper", "lower")]
+prev_start$cause_name <- revalue(prev_start$cause_name,
+                                 c("Anxiety disorders" = "prev_anxiety",
+                                   "Major depressive disorder" = "prev_depression",
+                                   "Bipolar disorder" = "prev_bipolar"))
+prev_start$val <- prev_start$val / 100000
+
+prev_start <- reshape2::dcast(prev_start, location_name + sex_name + age_name ~ cause_name,
+                    value.var = "val")
+```
+
+```{r get_suicide_data}
+suicide <- data.table(suicide_raw)
+
+suicide <- suicide[location %in% our_countries &
+                     metric == "Percent"]
+
+# GBD only has rates for up to 94; duplicate the rates for 95-100 and 100+
+# to fill out the mortality rates from UNPD
+suicide_95_100 <- subset(suicide, age == "90 to 94")
+suicide_100_plus <- subset(suicide, age == "90 to 94")
+
+suicide_95_100$age <- "95 to 99"
+suicide_100_plus$age <- "100+"
+
+suicide <- rbind(suicide, suicide_95_100, suicide_100_plus)
+```
+
+```{r combine_death_and_suicide}
+suicide <- rename(suicide, c("location" = "Location",
+                             "sex" = "Sex",
+                             "age" = "AgeGrp",
+                             "val" = "perc_death_suicide_base",
+                             "upper" = "perc_death_suicide_upper",
+                             "lower" = "perc_death_suicide_lower"))
+
+suicide$AgeGrp <- gsub(" to ", "-", suicide$AgeGrp)
+
+life_table_w_suicide <- merge(life_table, 
+                              suicide[, -c("measure", "cause", "metric", "year")])
+
+life_table_w_suicide$Pr_death_suicide_base <- 
+  life_table_w_suicide$monthly_pr_die * life_table_w_suicide$perc_death_suicide_base
+life_table_w_suicide$Pr_death_not_suicide_base <-
+  life_table_w_suicide$monthly_pr_die - life_table_w_suicide$Pr_death_suicide_base
+```
+
+```{r get_inc_by_age}
+inc <- data.table(inc_raw)
+
+inc <- inc[location %in% our_countries & 
+             cause %in% c("Major depressive disorder", "Anxiety disorders",
+                          "Bipolar disorder", "Self-harm")]
+
+inc$age_group_start <- as.numeric(gsub(" to [1-9][0-9]", "", inc$age))
+inc$inc_base <- inc$val / 100000
+
+# get monthly incidence from annual incidence
+inc$inc_base_monthly <- 1 - (1 - inc$inc_base)^(1/12)
+```
+
+```{r country_breakdown, echo = FALSE}
+# standardize country names for merge
+world_bank <- rename(world_bank_raw, c("Data.for.calendar.year.." = "location_name"))
+world_bank$location_name <- revalue(world_bank$location_name,
+  c("United States" = "United States of America",
+    "Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Yemen, Rep." = "Yemen",
+    "Congo, Rep." = "Congo",
+    "Korea, Dem. Rep." = "North Korea",
+    "Korea, Rep." = "South Korea",
+    "Gambia, The" = "Gambia",
+    "Kyrgyz Republic" = "Kyrgyzstan",
+    "Micronesia, Fed. Sts." = "Micronesia",
+    "Slovak Republic" = "Slovakia",
+    "Tanzania" = "United Republic of Tanzania",
+    "Venezuela, RB" = "Venezuela",
+    "CuraÃ§ao" = "Curaçao",
+    "SÃ£o TomÃ© and Principe" = "São Tomé and Príncipe",
+    "Vietnam" = "Viet Nam"))
+
+who <- rename(who_raw, c("ï..Country" = "location_name"))
+who$location_name <- revalue(who$location_name,
+  c("Iran, Islamic Republic of" = "Iran (Islamic Republic of)",
+    "Tanzania, United Republic of" = "United Republic of Tanzania",
+    "Antigua And Barbuda" = "Antigua and Barbuda",
+    "Bahamas" = "Bahamas, The",
+    "Cape Verde" = "Cabo Verde",
+    "Democratic Peoples Republic of Korea" = "North Korea",
+    "Korea, Republic of" = "South Korea",
+    "Lao People's Democratic Republic" = "Lao PDR",
+    "Macedonia, the former Yugoslav Republic of" = "North Macedonia",
+    "Micronesia, Federated States of" = "Micronesia",
+    "Moldova, Republic of" = "Moldova",
+    "Saint Kitts and Nevis" = "St. Kitts and Nevis",
+    "Saint Vincent and the Grenadines" = "St. Vincent and the Grenadines",
+    "Swaziland" = "Eswatini"))
+
+world_bank_append <- data.frame("location_name" = c("Cameroon", "Cook Islands", "Niue"),
+                                "X2019" =         c("LM",       "UM",           "UM"))
+world_bank <- rbind.fill(world_bank, world_bank_append)
+
+#"AFRO"  "EMRO"  "EURO"  "PAHO"  "SEARO" "WPRO"  
+who_append <- as.data.frame(rbind(c("American Samoa",            "WPRO"),
+                                  c("Aruba",                     "PAHO"),
+                                  c("Bermuda",                   "PAHO"),
+                                  c("British Virgin Islands",    "PAHO"),
+                                  c("Cayman Islands",            "PAHO"),
+                                  c("Channel Islands",           "EURO"),
+                                  c("Curaçao",                   "PAHO"),
+                                  c("Faeroe Islands",            "EURO"),
+                                  c("French Polynesia",          "WPRO"),
+                                  c("Gibraltar",                 "EURO"),
+                                  c("Greenland",                 "EURO"),
+                                  c("Guam",                      "WPRO"),
+                                  c("Hong Kong SAR, China",      "WPRO"),
+                                  c("Isle of Man",               "EURO"),
+                                  c("Kosovo",                    "EURO"),
+                                  c("Liechtenstein",             "EURO"),
+                                  c("Macao SAR, China",          "WPRO"),
+                                  c("New Caledonia",             "WPRO"),
+                                  c("Northern Mariana Islands",  "WPRO"),
+                                  c("Namibia",                   "AFRO"),
+                                  c("Panama",                    "PAHO"),
+                                  c("Puerto Rico",               "PAHO"),
+                                  c("Rwanda",                    "AFRO"),
+                                  c("São Tomé and Príncipe",     "AFRO"),
+                                  c("Sint Maarten (Dutch part)", "PAHO"),
+                                  c("St. Lucia",                 "PAHO"),
+                                  c("St. Martin (French part)",  "PAHO"),
+                                  c("Taiwan, China",             "WPRO"),
+                                  c("Turks and Caicos Islands",  "PAHO"),
+                                  c("Virgin Islands (U.S.)",     "PAHO"),
+                                  c("West Bank and Gaza",        "EMRO")))
+names(who_append) <- c("location_name", "Region.Name")
+who <- rbind.fill(who, who_append)
+
+world_bank$location_name[!(world_bank$location_name %in% who$location_name)]
+who$location_name[!(who$location_name %in% world_bank$location_name)] 
+
+# get merged list
+wb_and_who <- merge(world_bank[world_bank$location_name %in% our_countries, 
+                               c("location_name", "X2019")],
+                    who[, c("location_name", "Region.Name")])
+
+wb_and_who$X2019 <- revalue(wb_and_who$X2019, c("H" = "High",
+                                                "UM" = "Upper middle",
+                                                "LM" = "Lower middle",
+                                                "L" = "Low"))
+
+wb_and_who <- rename(wb_and_who, c("location_name" = "country", 
+                                   "X2019" = "wb_income_level",
+                                   "Region.Name" = "who_region_name"))
+
+wb_and_who_tot <- merge(world_bank[, c("location_name", "X2019")],
+                    who[, c("location_name", "Region.Name")])
+```
+
+```{r get_background_morbidity}
+bg_morbidity <- bg_morbidity_raw
+
+bg_morbidity$sex <- gsub("s", "", bg_morbidity$sex)
+bg_morbidity <- bg_morbidity[, !(names(bg_morbidity) %in% c("metric", "year"))]
+
+bg_morbidity$age_group_start <- sapply(bg_morbidity$age, 
+                                       function (x) as.numeric(substr(x, start = 1, stop = 2)))
+bg_morbidity <- rename(bg_morbidity, c("ï..measure" = "measure"))
+bg_morbidity$measure <- gsub(" \\(..*", "", bg_morbidity$measure)
+
+# only including disability, not death, so drop self-harm; only need to subtract
+# disability due to anxiety, depression, bipolar disorder
+bg_morbidity <- subset(bg_morbidity, measure == "YLDs" & cause != "Self-harm")
+
+bg_morbidity_base <- dcast(bg_morbidity,
+                      measure + country + sex + age_group_start ~ cause,
+                      value.var = "val")
+bg_morbidity_base$yld_less_mh_base <- bg_morbidity_base$`All causes` - bg_morbidity_base$`Anxiety disorders` -
+  bg_morbidity_base$`Bipolar disorder` - bg_morbidity_base$`Major depressive disorder`
+bg_morbidity_base$bg_morbidity_weight_base <- bg_morbidity_base$yld_less_mh_base / 100000
+
+bg_morbidity_upper <- dcast(bg_morbidity,
+                      measure + country + sex + age_group_start ~ cause,
+                      value.var = "upper")
+bg_morbidity_upper$yld_less_mh_upper <- bg_morbidity_upper$`All causes` - bg_morbidity_upper$`Anxiety disorders` -
+  bg_morbidity_upper$`Bipolar disorder` - bg_morbidity_upper$`Major depressive disorder`
+bg_morbidity_upper$bg_morbidity_weight_upper <- bg_morbidity_upper$yld_less_mh_upper / 100000
+
+bg_morbidity_lower <- dcast(bg_morbidity,
+                      measure + country + sex + age_group_start ~ cause,
+                      value.var = "lower")
+bg_morbidity_lower$yld_less_mh_lower <- bg_morbidity_lower$`All causes` - bg_morbidity_lower$`Anxiety disorders` -
+  bg_morbidity_lower$`Bipolar disorder` - bg_morbidity_lower$`Major depressive disorder`
+bg_morbidity_lower$bg_morbidity_weight_lower <- bg_morbidity_lower$yld_less_mh_lower / 100000
+
+bg_morbidity <- cbind(bg_morbidity_base[, c("country", "sex", "age_group_start",
+                                            "bg_morbidity_weight_base")],
+                      bg_morbidity_lower[, "bg_morbidity_weight_lower"],
+                      bg_morbidity_upper[, "bg_morbidity_weight_upper"])
+names(bg_morbidity) <- c("country", "sex", "age_group_start",
+                         "bg_morbidity_weight_base",
+                         "bg_morbidity_weight_lower",
+                         "bg_morbidity_weight_upper")
+```
+
+```{r get_scholarization_rates}
+# spreadsheets gives proportion of adolescents not in secondary school, by gender
+# use country-specific where possible, country income levels where not possible
+school_bycountry <- rbind(school_F_bycountry_raw, school_M_bycountry_raw)
+school_bycountry$sex <- rep(c("Female", "Male"), each = nrow(school_bycountry) / 2)
+school_bycountry <- rename(school_bycountry, c("Time" = "country"))
+
+# get country names in line with "our country" names
+school_bycountry$country <- revalue(school_bycountry$country, 
+                                    c("United Kingdom of Great Britain and Northern Ireland" = "United Kingdom"))
+
+school_bycountry <- subset(school_bycountry, country %in% our_countries)
+
+# pull in updated data for countries with updated figures
+school_bycountry_2021 <- rbind(school_F_bycountry_2021_raw, school_M_bycountry_2021_raw)
+school_bycountry_2021$sex <- rep(c("Female", "Male"), each = nrow(school_bycountry_2021) / 2)
+school_bycountry_2021 <- rename(school_bycountry_2021, c("Time" = "country"))
+
+school_bycountry_2021$country <- revalue(school_bycountry_2021$country, 
+                                    c("United Kingdom of Great Britain and Northern Ireland" = "United Kingdom"))
+
+school_bycountry_2021 <- subset(school_bycountry_2021, country %in% our_countries)
+
+
+school_bycountry <- rbind.fill(school_bycountry_2021, subset(school_bycountry, !(country %in% school_bycountry_2021$country)))
+
+# get most recent data for countries with data
+school_bycountry <- reshape2::melt(school_bycountry, id.vars = c("country", "sex"),
+                         variable.name = "year", value.name = "perc_not_in_school")
+school_bycountry$year <- as.numeric(gsub("X", "", as.character(school_bycountry$year)))
+school_bycountry$perc_not_in_school <- as.numeric(school_bycountry$perc_not_in_school)
+
+# keep only most recent data
+school_bycountry <- subset(school_bycountry, !is.na(school_bycountry$perc_not_in_school))
+most_recent_years <- tapply(school_bycountry$year, school_bycountry$country, 
+                            max, na.rm = TRUE)
+
+most_recent_years <- data.frame(year = most_recent_years,
+                                country = names(most_recent_years))
+most_recent_years <- subset(most_recent_years, country %in%
+                              unique(school_bycountry$country))
+school_bycountry <- merge(school_bycountry, most_recent_years)
+
+# for countries without specific data, use the data from their World Bank income group
+# get most recent data for each World Bank income level
+school_byWBincome <- rbind(school_F_byWBincome_raw, school_M_byWBincome_raw)
+school_byWBincome$sex <- rep(c("Female", "Male"), each = nrow(school_byWBincome) / 2)
+
+school_byWBincome <- data.frame(wb_income_level = school_byWBincome$Time,
+                                sex = school_byWBincome$sex,
+                                year = 2018,
+                                perc_not_in_school = school_byWBincome$X2018)
+school_byWBincome$wb_income_level <- gsub("  | income countries", "", 
+                                          school_byWBincome$wb_income_level)
+
+
+# merge with country data
+school_byWBincome <- merge(wb_and_who, school_byWBincome, 
+                           all.y = TRUE, by = "wb_income_level")
+
+# keep only those without country-level data
+school_byWBincome <- subset(school_byWBincome, 
+                            !(country %in% unique(school_bycountry$country)) &
+                              !is.na(country))
+
+# join together
+school_bycountry <- rbind.fill(school_byWBincome, school_bycountry)
+school_bycountry$Pr_not_in_school <- school_bycountry$perc_not_in_school / 100
+school_bycountry$Pr_in_school <- 1 - school_bycountry$Pr_not_in_school
+```
+
+```{r get_internet_data}
+internet <- rename(internet_raw, c("Country.Name" = "country"))
+
+internet$country <- revalue(internet$country,
+  c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+
+internet <- subset(internet, country %in% our_countries)
+
+# get most recent internet proportion and year
+internet$Pr_access_internet <- ifelse(!is.na(internet$X2019), internet$X2019 / 100,
+                               ifelse(!is.na(internet$X2018), internet$X2018 / 100, internet$X2017 / 100))
+
+internet <- internet[, c("country", "Pr_access_internet")]
+```
+
+```{r get_gdp_per_capita}
+gdp_per_cap <- gdp_per_cap_raw
+
+gdp_per_cap <- rename(gdp_per_cap, c("Country.Name" = "country"))
+gdp_per_cap$country <- revalue(gdp_per_cap$country, 
+    c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+
+gdp_per_cap <- subset(gdp_per_cap, country %in% our_countries)
+
+# Iran has no GDP per capita data yet for 2019; use the 2018 data inflated to 2019 using the LCU GDP inflator from the World Bank
+# https://data.worldbank.org/indicator/NY.GDP.DEFL.ZS
+gdp_per_cap$out <- ifelse(grepl("Iran", gdp_per_cap$country), gdp_per_cap$X2018 * 388.3705596 / 283.6683646, gdp_per_cap$X2019)
+
+gdp_per_cap <- data.frame(country = gdp_per_cap$country,
+                          gdp_per_cap_2019 = gdp_per_cap$out)
+
+gdp_per_cap$gdp_per_cap_2019_monthly <- gdp_per_cap$gdp_per_cap_2019 / 12
+```
+
+```{r get_expected_income_by_education_level}
+income_lowest_10 <- subset(income_lowest_10_raw, !is.na(country))
+cpi <- cpi_raw
+gdp_deflator_lcu <- gdp_deflator_lcu_raw
+ppp_private_conversion <- ppp_private_conversion_raw
+ppp_gdp_conversion <- ppp_gdp_conversion_raw
+return_to_edu <- return_to_edu_raw
+#pr_edu <- pr_edu_raw
+#pr_emp_edu <- pr_emp_edu_raw
+
+
+# get lowest decile income/consumption by country
+income_lowest_10$country <- revalue(income_lowest_10$country,
+                                    c("United States" = "United States of America",
+                                      "Iran" = "Iran (Islamic Republic of)",
+                                      "Tanzania" = "United Republic of Tanzania",
+                                      "Vietnam" = "Viet Nam"))
+
+#### need to convert from 2011 $ PPP to 2019 $ PPP
+#### convert to LCU, then use consumer price index (basis of PPP calculations) to inflate, then convert back to $ PPP
+
+# Afghanistan is missing from the income/consumption by decile information
+# Use lowest decile information from the other countries in the same income group and geographic region
+# (if they have enough data to make the calculations possible!)
+afghan_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "L" & wb_and_who_tot$Region.Name == "EMRO"])
+
+cpi <- rename(cpi, c("Country.Name" = "country"))
+cpi$country <- revalue(cpi$country, 
+  c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+
+cpi <- subset(cpi, country %in% c(our_countries, afghan_proxy))
+cpi <- cpi[, c("country", grep("X201", names(ppp_private_conversion), value = TRUE))]
+
+# for countries without CPI information up through 2019, use GDP deflator
+gdp_deflator_lcu <- rename(gdp_deflator_lcu, c("Country.Name" = "country"))
+gdp_deflator_lcu$country <- revalue(gdp_deflator_lcu$country, 
+  c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+
+gdp_deflator_lcu <- subset(gdp_deflator_lcu, country %in% c(our_countries, afghan_proxy))
+gdp_deflator_lcu <- gdp_deflator_lcu[, c("country", grep("X201", names(gdp_deflator_lcu), value = TRUE))]
+
+cpi_complete <- subset(cpi, !(is.na(X2019)))
+cpi_complete$value_type <- "CPI"
+inflators_complete <- rbind.fill(cpi_complete, subset(gdp_deflator_lcu, !(country %in% cpi_complete$country)))
+inflators_complete$value_type <- ifelse(is.na(inflators_complete$value_type), "GDP", cpi_complete$value_type)
+
+inflators_complete$conv_2011_to_2019 <- inflators_complete$X2019 / inflators_complete$X2011
+
+income_lowest_10 <- merge(income_lowest_10, inflators_complete[, c("country", "conv_2011_to_2019", "value_type")])
+
+
+
+# get conversion factors between LCU and $ PPP
+ppp_private_conversion <- rename(ppp_private_conversion, c("Country.Name" = "country"))
+ppp_private_conversion$country <- revalue(ppp_private_conversion$country, c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+ppp_private_conversion <- subset(ppp_private_conversion, country %in% c(our_countries, afghan_proxy))
+ppp_private_conversion <- ppp_private_conversion[, c("country", grep("X201", names(lcu_to_ppp_adj_usd), value = TRUE))]
+
+ppp_gdp_conversion <- rename(ppp_gdp_conversion, c("Country.Name" = "country"))
+ppp_gdp_conversion$country <- revalue(ppp_gdp_conversion$country, c("Egypt, Arab Rep." = "Egypt",
+    "Congo, Dem. Rep." = "Democratic Republic of the Congo",
+    "Yemen, Rep." = "Yemen",
+    "United States" = "United States of America",
+    "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+    "Tanzania" = "United Republic of Tanzania",
+    "Vietnam" = "Viet Nam"))
+ppp_gdp_conversion <- subset(ppp_gdp_conversion, country %in% c(our_countries, afghan_proxy))
+ppp_gdp_conversion <- ppp_gdp_conversion[, c("country", grep("X201", names(lcu_to_ppp_adj_usd), value = TRUE))]
+
+conversion_private_complete <- subset(ppp_private_conversion, !(is.na(X2019)))
+conversion_private_complete$conversion_value_type <- "private"
+conversion_complete <- rbind.fill(conversion_private_complete, subset(ppp_gdp_conversion, !(country %in% conversion_private_complete$country)))
+conversion_complete$conversion_value_type <- ifelse(is.na(conversion_complete$conversion_value_type), "GDP", conversion_complete$conversion_value_type)
+
+income_lowest_10 <- merge(income_lowest_10, conversion_complete[, c("country", "X2011", "X2019", "conversion_value_type")])
+
+
+# conversion: convert from 2011 $ PPP to 2011 LCU, inflate to 2019 LCU (accounts for different inflation within countries),
+# convert from 2019 LCU to 2019 $ PPP
+income_lowest_10$lower_10_perc_monthly_income_2019_PPP <- income_lowest_10$lower_10_perc_monthly_income_PPP * income_lowest_10$X2011 *
+  income_lowest_10$conv_2011_to_2019 / income_lowest_10$X2019
+
+income_lowest_10$lower_10_perc_monthly_income_2019_PPP <-
+  ifelse(is.na(income_lowest_10$lower_10_perc_monthly_income_2019_PPP),
+         mean(income_lowest_10$lower_10_perc_monthly_income_2019_PPP[income_lowest_10$country %in% afghan_proxy], na.rm = TRUE),
+         income_lowest_10$lower_10_perc_monthly_income_2019_PPP)
+
+income_lowest_10 <- subset(income_lowest_10, country %in% our_countries)
+
+
+# for countries with incomplete data on return to one year of education, pull less-specific data over
+f_replace_all <- function (colname) {
+  x = return_to_edu[, colname]
+  ifelse(!is.na(x), x, return_to_edu[, gsub("_[1-3]o_all", "_tot", colname)])
+}
+f_replace_fm <- function (colname) {
+  x = return_to_edu[, colname]
+  ifelse(!is.na(x), x, return_to_edu[, gsub("_[f|m]", "_all", colname)])
+}
+
+return_to_edu$country <- revalue(return_to_edu$country,
+                                    c("United States" = "United States of America",
+                                      "Iran" = "Iran (Islamic Republic of)",
+                                      "Tanzania" = "United Republic of Tanzania",
+                                      "Vietnam" = "Viet Nam"))
+
+return_to_edu[, grep("_all", names(return_to_edu))] <- sapply(grep("_all", names(return_to_edu), value = TRUE), f_replace_all)
+return_to_edu[, grep("_[f|m]", names(return_to_edu))] <- sapply(grep("_[f|m]", names(return_to_edu), value = TRUE), f_replace_fm)
+
+# for Algeria, Egypt, Iran, Sudan, and Vietnam, have no data on expected return to education
+# pull data from same WHO region and WB income level to replace
+return_to_edu$fill_in_groups <- 
+  ifelse(return_to_edu$country %in% c("Algeria", "Botswana", "Equatorial Guinea", "Gabon", "Mauritius", "South Africa"),
+         "AFRO_UM",
+  ifelse(return_to_edu$country %in% c("Iran", "Iraq", "Jordan", "Lebanon", "Libya"), "EMRO_UM",
+  ifelse(return_to_edu$country %in% c("Djibouti", "Egypt", "Morocco", "Pakistan", "Sudan", "Tunisia"), "EMRO_LM",
+  ifelse(return_to_edu$country %in% c("Cambodia", "Kiribati", "Mongolia", "Papua New Guinea", "Philippines", "Solomon Islands",
+                                      "Vanatau", "Lao PDR", "Micronesia", "Vietnam"), "WPRO_LM", "OTHER"))))
+
+return_to_edu <- split(return_to_edu, f = return_to_edu$fill_in_groups)
+
+f_replace_by_who_wb <- function(colname){
+  x = return_to_edu[[i]][, colname]
+  ifelse(!is.na(x), x, mean(x, na.rm = TRUE))
+}
+
+for (i in 1:length(return_to_edu)) {
+  return_to_edu[[i]][, grep("return", names(return_to_edu[[i]]))] <-
+    sapply(grep("return", names(return_to_edu[[i]]), value = TRUE), f_replace_by_who_wb)
+}
+
+return_to_edu <- do.call(rbind, return_to_edu)
+
+# keep only countries in dataset
+return_to_edu <- subset(return_to_edu, country %in% our_countries)
+
+# get male and female on separate rows for calculations
+# and get in proportions while convenient
+return_to_edu <- reshape2::melt(return_to_edu, id.vars = "country", measure.vars = grep("_[f|m]", names(return_to_edu), value = TRUE),
+                      value.name = "return_to_1yr_school")
+return_to_edu$sex <- ifelse(grepl("_f", return_to_edu$variable), "Female", "Male")
+return_to_edu$variable <- gsub("_[f|m]", "", return_to_edu$variable)
+return_to_edu$return_to_1yr_school <- return_to_edu$return_to_1yr_school / 100
+
+
+
+#### calculate expected income by education level
+# get number of years at each level of education
+time_primary <- rename(time_primary_raw, c("Time" = "country",
+                                           "X2019" = "time_primary"))
+time_primary$country <- revalue(time_primary$country, c("United Kingdom of Great Britain and Northern Ireland" = "United Kingdom"))
+time_primary <- subset(time_primary, country %in% our_countries)
+
+
+time_secondary <- rename(time_secondary_raw, c("Time" = "country",
+                                           "X2019" = "time_secondary"))
+time_secondary$country <- revalue(time_secondary$country, c("United Kingdom of Great Britain and Northern Ireland" = "United Kingdom"))
+time_secondary <- subset(time_secondary, country %in% our_countries)
+
+time_school <- cbind(time_primary[, c("country", "time_primary")], time_secondary[, c("time_secondary")])
+
+names(time_school)[3] <- "time_secondary"
+
+# assume 4 years of tertiary education, most common tertiary degree length in OECD
+# OECD. “How Many Students Finish Tertiary Education?” OECD, 2011. https://www.oecd.org/education/skills-beyond-school/48630696.pdf.
+time_school$time_tertiary <- 4
+time_school$time_primary <- as.numeric(as.character(time_school$time_primary))
+time_school$time_secondary <- as.numeric(as.character(time_school$time_secondary))
+
+# assume 6 years at each level of education
+exp_w_by_edu <- vector(mode = "list", length = length(our_countries))
+
+for (i in 1:length(our_countries)) {
+  n_years_tot <- as.numeric(rowSums(time_school[, grep("time", names(time_school))])[i])
+  
+  exp_w_by_edu[[i]] <- data.frame(country = rep(time_school$country[i], 
+                                                times = (n_years_tot + 1) * 2),
+                                  sex = rep(c("Female", "Male"), each = (n_years_tot + 1)),
+                                  years_edu = rep(0:n_years_tot, times = 2),
+                                  variable = rep(c("no_schooling", unique(return_to_edu$variable)), 
+                                                     times = c(1, 
+                                                               time_school$time_primary[i], 
+                                                               time_school$time_secondary[i], 
+                                                               time_school$time_tertiary[i])))
+}
+
+exp_w_by_edu <- do.call(rbind, exp_w_by_edu)
+
+exp_w_by_edu <- merge(exp_w_by_edu, return_to_edu, all = TRUE)
+
+# get monthly income of the lowest 10% as expected wage for people with 0 education
+income_lowest_10$years_edu <- 0
+exp_w_by_edu <- merge(exp_w_by_edu, income_lowest_10[, c("country", "years_edu", "lower_10_perc_monthly_income_2019_PPP")],
+                      all = TRUE)
+exp_w_by_edu <- rename(exp_w_by_edu, c("lower_10_perc_monthly_income_2019_PPP" = "exp_w_2019_USD"))
+
+# expand expected wages
+setDT(exp_w_by_edu)
+setorder(exp_w_by_edu, country, sex, years_edu)
+
+while (anyNA(exp_w_by_edu$exp_w_2019_USD)) {
+exp_w_by_edu[, exp_w_2019_USD := ifelse(!is.na(exp_w_2019_USD), exp_w_2019_USD, (1 + return_to_1yr_school) * shift(exp_w_2019_USD)), by = list(country, sex)]
+}
+
+# get value for each level of education
+exp_w_by_edu <- exp_w_by_edu[, .SD[which.max(years_edu)], by = list(country, sex, variable)]
+exp_w_by_edu$edu_level <- rep_len(c("exp_w_edu_lt_basic", "exp_w_edu_basic", "exp_w_edu_inter", "exp_w_edu_adv"), nrow(exp_w_by_edu))
+
+# get in shape for use
+exp_w_by_edu <- reshape2::dcast(exp_w_by_edu, country + sex ~ edu_level, value.var = "exp_w_2019_USD")
+
+## get probability of level of education by age for each country
+pr_edu <- rename(pr_edu_raw, c("ï..ref_area.label" = "country",
+                           "sex.label" = "sex",
+                           "classif1.label" = "age_bands",
+                           "classif2.label" = "edu_level",
+                           "obs_value" = "n_edu_level"))
+pr_edu$country <- revalue(pr_edu$country,
+                                    c("United States" = "United States of America",
+                                      "Tanzania, United Republic of" = "United Republic of Tanzania",
+                                      "Congo, Democratic Republic of the" = "Democratic Republic of the Congo",
+                                      "Iran, Islamic Republic of" = "Iran (Islamic Republic of)",
+                                      "Hong Kong, China" = "Hong Kong SAR, China",
+                                      "Korea, Republic of" = "South Korea",
+                                      "Lao People's Democratic Republic" = "Lao PDR",
+                                      "Micronesia, Federated States of" = "Micronesia"))
+
+# get probability from the number
+pr_edu <- ddply(pr_edu, .(country, sex, age_bands), mutate, 
+                pr_edu_level = n_edu_level / sum(n_edu_level, na.rm = TRUE))
+pr_edu$pr_edu_level <- ifelse(is.na(pr_edu$pr_edu_level), 0, pr_edu$pr_edu_level)
+
+# no data for probability of level of education for China, Japan, or the Philippines so use averages from their
+# World Bank income level and WHO region
+# China: UM, WPRO
+# Japan: H, WPRO
+# Philippines: LM, WPRO
+japan_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "H" & wb_and_who_tot$Region.Name == "WPRO"])
+china_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "UM" & wb_and_who_tot$Region.Name == "WPRO"])
+philippines_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "LM" & wb_and_who_tot$Region.Name == "WPRO"])
+
+pr_edu_um_wpro <- subset(pr_edu, grepl("Aggregate", pr_edu$edu_level) & 
+                           country %in% china_proxy)
+pr_edu_um_wpro <- ddply(pr_edu_um_wpro, .(sex, age_bands, edu_level), summarise,
+                        pr_edu_level_raw = mean(pr_edu_level, na.rm = TRUE))
+# weight so properly sums to 1
+pr_edu_um_wpro <- ddply(pr_edu_um_wpro, .(sex, age_bands), mutate,
+                        pr_edu_tot = sum(pr_edu_level_raw, na.rm = TRUE))
+pr_edu_um_wpro$pr_edu_level <- pr_edu_um_wpro$pr_edu_level / pr_edu_um_wpro$pr_edu_tot
+pr_edu_um_wpro$country <- "China"
+
+pr_edu_h_wpro <- subset(pr_edu, grepl("Aggregate", pr_edu$edu_level) & 
+                           country %in% japan_proxy)
+pr_edu_h_wpro <- ddply(pr_edu_h_wpro, .(sex, age_bands, edu_level), summarise,
+                        pr_edu_level_raw = mean(pr_edu_level, na.rm = TRUE))
+# weight so properly sums to 1
+pr_edu_h_wpro <- ddply(pr_edu_h_wpro, .(sex, age_bands), mutate,
+                        pr_edu_tot = sum(pr_edu_level_raw, na.rm = TRUE))
+pr_edu_h_wpro$pr_edu_level <- pr_edu_h_wpro$pr_edu_level / pr_edu_h_wpro$pr_edu_tot
+pr_edu_h_wpro$country <- "Japan"
+
+pr_edu_lm_wpro <- subset(pr_edu, grepl("Aggregate", pr_edu$edu_level) & 
+                           country %in% philippines_proxy)
+pr_edu_lm_wpro <- ddply(pr_edu_lm_wpro, .(sex, age_bands, edu_level), summarise,
+                        pr_edu_level_raw = mean(pr_edu_level, na.rm = TRUE))
+# weight so properly sums to 1
+pr_edu_lm_wpro <- ddply(pr_edu_lm_wpro, .(sex, age_bands), mutate,
+                        pr_edu_tot = sum(pr_edu_level_raw, na.rm = TRUE))
+pr_edu_lm_wpro$pr_edu_level <- pr_edu_lm_wpro$pr_edu_level / pr_edu_lm_wpro$pr_edu_tot
+pr_edu_lm_wpro$country <- "Philippines"
+
+pr_edu <- subset(pr_edu, country %in% our_countries)
+pr_edu <- rbind.fill(pr_edu, pr_edu_um_wpro, pr_edu_h_wpro, pr_edu_lm_wpro)
+
+pr_edu$edu_level <- revalue(pr_edu$edu_level, c("Education (Aggregate levels): Less than basic" = "edu_lt_basic",
+                                                "Education (Aggregate levels): Basic" = "edu_basic",
+                                                "Education (Aggregate levels): Intermediate" = "edu_inter",
+                                                "Education (Aggregate levels): Advanced" = "edu_adv"))
+
+# set any missing values to 0
+pr_edu$edu_level <- paste0("pr_", pr_edu$edu_level)
+pr_edu <- reshape2::dcast(pr_edu, country + sex + age_bands ~ edu_level, value.var = "pr_edu_level")
+pr_edu[is.na(pr_edu)] <- 0
+
+# replace negative numbers with 0
+pr_edu[, grep("pr_edu_", names(pr_edu))] <- 
+  sapply(pr_edu[, grep("pr_edu_", names(pr_edu))], function (x) ifelse(x < 0, 0, x))
+# scale everything so probabilities sum to 1 again
+pr_edu$pr_tot <- rowSums(pr_edu[, grep("pr_edu_", names(pr_edu))], na.rm = TRUE)
+pr_edu[, grep("pr_edu_", names(pr_edu))] <- 
+  sapply(pr_edu[, grep("pr_edu_", names(pr_edu))], function (x) x / pr_edu$pr_tot)
+
+pr_edu <- pr_edu[, c("country", "sex", "age_bands", grep("pr_edu_", names(pr_edu), value = TRUE))]
+
+# no data on education levels for people below the age of 15
+# assume no one has a tertiary degree below the age of 15
+pr_edu_lt_15 <- subset(pr_edu, age_bands == "Age (10-year bands): 15-24")
+pr_edu_lt_15$age_bands <- "Age (10-year bands): 05-15"
+# assume that those with a less-than-basic education have dropped out by the age of 15
+pr_edu_lt_15$pr_edu_lt_basic <- pr_edu_lt_15$pr_edu_lt_basic
+# assume that everyone who goes on to a secondary or tertiary degree after the age of 15
+# has a basic education by the time they're 15
+# and that everyone with a basic education already has completed their degree
+pr_edu_lt_15$pr_edu_basic <- pr_edu_lt_15$pr_edu_basic + pr_edu_lt_15$pr_edu_inter + pr_edu_lt_15$pr_edu_adv
+# assume that no one has a secondary or tertiary degree below the age of 15
+pr_edu_lt_15$pr_edu_adv <- 0
+pr_edu_lt_15$pr_edu_inter <- 0
+
+pr_edu <- rbind(pr_edu, pr_edu_lt_15)
+
+## get probability of employment by education level in each country
+pr_emp_edu <- rename(pr_emp_edu_raw, c("ï..ref_area.label" = "country",
+                                   "sex.label" = "sex",
+                                   "classif1.label" = "age_bands",
+                                   "classif2.label" = "edu_level",
+                                   "obs_value" = "pr_emp_by_edu_level"))
+pr_emp_edu$country <- revalue(pr_emp_edu$country, 
+                                    c("United States" = "United States of America",
+                                      "Tanzania, United Republic of" = "United Republic of Tanzania",
+                                      "Congo, Democratic Republic of the" = "Democratic Republic of the Congo",
+                                      "Iran, Islamic Republic of" = "Iran (Islamic Republic of)",
+                                      "Hong Kong, China" = "Hong Kong SAR, China",
+                                      "Korea, Republic of" = "South Korea",
+                                      "Lao People's Democratic Republic" = "Lao PDR",
+                                      "Micronesia, Federated States of" = "Micronesia",
+                                      "Cape Verde" = "Cabo Verde"))
+pr_emp_edu$pr_emp_by_edu_level <- pr_emp_edu$pr_emp_by_edu_level / 100
+
+# no data for probability of employment given level of education for Algeria, China, Iran, Japan, Morocco, Philippines so use averages from
+# Algeria: UM, AFRO
+# China: UM, WPRO
+# Iran: UM, EMRO
+# Japan: H, WPRO
+# Morocco: LM, EMRO
+# Philippines: LM, WPRO
+
+algeria_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "LM" & wb_and_who_tot$Region.Name == "AFRO"])
+morocco_proxy <- as.character(wb_and_who_tot$location_name[wb_and_who_tot$X2019 == "LM" & wb_and_who_tot$Region.Name == "EMRO"])
+
+missing_proxies <- list(algeria_proxy, china_proxy, japan_proxy, morocco_proxy, philippines_proxy)
+missing_names <- list("Algeria", "China", "Japan", "Morocco", "Philippines")
+
+get_pr_emp_edu <- function (country_proxy, country_name) {
+  pr_emp_subset = subset(pr_emp_edu, country %in% country_proxy)
+  
+  pr_emp_subset = ddply(pr_emp_subset, .(sex, age_bands, edu_level), summarise,
+                        pr_emp_by_edu_level = mean(pr_emp_by_edu_level, na.rm = TRUE))
+  
+  pr_emp_subset$country = country_name
+  
+  pr_emp_subset
+}
+
+#missing_pr_emp <- vector(mode = "list")
+missing_pr_emp <- mapply(get_pr_emp_edu, 
+                         list(algeria_proxy, china_proxy, japan_proxy, morocco_proxy, philippines_proxy), 
+                         list("Algeria", "China", "Japan", "Morocco", "Philippines"),
+                         SIMPLIFY = FALSE)
+
+missing_pr_emp <- do.call(rbind, missing_pr_emp)
+
+pr_emp_edu <- rbind.fill(pr_emp_edu, missing_pr_emp)
+pr_emp_edu <- subset(pr_emp_edu, country %in% our_countries)
+
+# if missing data by age band, pull in total information
+pr_emp_edu$edu_level <- revalue(pr_emp_edu$edu_level, c("Education (Aggregate levels): Less than basic" = "pr_emp_edu_lt_basic",
+                                                "Education (Aggregate levels): Basic" = "pr_emp_edu_basic",
+                                                "Education (Aggregate levels): Intermediate" = "pr_emp_edu_inter",
+                                                "Education (Aggregate levels): Advanced" = "pr_emp_edu_adv",
+                                                "Education (Aggregate levels): Total" = "pr_emp_edu_tot"))
+
+pr_emp_edu <- reshape2::dcast(pr_emp_edu, country + sex + age_bands ~ edu_level, value.var = "pr_emp_by_edu_level")
+get_tot_pr <- function (colname) {
+  ifelse(is.na(pr_emp_edu[, colname]), pr_emp_edu[, "pr_emp_edu_tot"], 
+         ifelse(is.nan(pr_emp_edu[, colname]), pr_emp_edu[, "pr_emp_edu_tot"], pr_emp_edu[, colname]))
+}
+
+pr_emp_levels <- c("pr_emp_edu_lt_basic", "pr_emp_edu_basic", "pr_emp_edu_inter", "pr_emp_edu_adv")
+pr_emp_edu[, pr_emp_levels] <- sapply(pr_emp_levels, get_tot_pr)
+
+# get into a data_frame that will work with lookup
+pr_edu_and_emp_edu <- merge(pr_edu, pr_emp_edu, all = TRUE)
+pr_edu_and_emp_edu$sex <- gsub("Sex: ", "", pr_edu_and_emp_edu$sex)
+pr_edu_and_emp_edu$age_grp_start <- as.numeric(substr(pr_edu_and_emp_edu$age_bands, 22, 23))
+
+# assume no one under the age of 15 employed
+pr_edu_and_emp_edu[is.na(pr_edu_and_emp_edu)] <- 0
+```
+
+```{r get_days_lost_due_to_illness}
+days_lost <- days_lost_raw
+
+days_lost$wb_income_level <- revalue(days_lost$country_income_level,
+                                     c("lower"  = "Low",
+                                       "middle" = "Lower middle",
+                                       "higher" = "High"))
+
+# source did not differentiate by upper/lower income level; break down here
+days_lost_mid <- subset(days_lost, wb_income_level == "Lower middle")
+days_lost_mid$wb_income_level <- "Upper middle"
+days_lost <- rbind(days_lost, days_lost_mid)
+rm(days_lost_mid)
+
+# calculate 95% CI to use as minimum and maximum
+days_lost$extra_days_out_per_year_min <- 
+  days_lost$extra_days_out_per_year_mean - (1.96 * days_lost$extra_days_out_per_year_se)
+
+days_lost$extra_days_out_per_year_min <-
+  ifelse(days_lost$extra_days_out_per_year_min < 0, 0,
+         days_lost$extra_days_out_per_year_min)
+
+days_lost$extra_days_out_per_year_max <- 
+  days_lost$extra_days_out_per_year_mean + (1.96 * days_lost$extra_days_out_per_year_se)
+
+# calculate proportion of days worked missed
+days_lost$p_miss_work <- days_lost$extra_days_out_per_year_mean / 216
+days_lost$p_miss_work_min <- days_lost$extra_days_out_per_year_min / 216
+days_lost$p_miss_work_max <- days_lost$extra_days_out_per_year_max / 216
+
+days_lost <- merge(wb_and_who, 
+                   days_lost[, c("wb_income_level", "condition", 
+                                 grep("p_", names(days_lost), value = TRUE))])
+```
+
+```{r get_monthly_intervention_costs}
+inter_costs <- inter_costs_raw
+inter_counts <- inter_counts_raw
+
+# the renamed unit cost columns here are the *adjusted* unit costs
+inter_costs <- rename(inter_costs,
+                      c("Cost.description" = "item",
+                        "Country" = "country",
+                        "Traded.Non.traded" = "traded",
+                        "X5..Unit.Cost..Traded." = "unit_cost_traded",
+                        "X6..Unit.Cost..Non.traded." = "unit_cost_non_traded",
+                        "Final.Unit.Cost..2019.USD." = "unit_cost_all"))
+
+inter_costs$country <- revalue(inter_costs$country,
+                               c("Congo, Dem. Rep." = "Democratic Republic of the Congo",
+                                 "Egypt, Arab Rep." = "Egypt",
+                                 "Iran, Islamic Rep." = "Iran (Islamic Republic of)",
+                                 "Tanzania" = "United Republic of Tanzania",
+                                 "United States" = "United States of America",
+                                 "Vietnam" = "Viet Nam",
+                                 "Yemen, Rep." = "Yemen"))
+
+# get each ingredient as its own column for multiplication purposes
+inter_costs$item_label <- revalue(inter_costs$item,
+  c("Computer" = "computer",
+    "Fluoxetine, per 20mg" = "fluoxetine_20mg",
+    "Haloperidol, per 1.5mg" = "haloperidol_1.5mg",
+    "Health worker salary, per hour" = "w_hw_hour",          
+    "Health worker salary, per hour (group session, per adolescent)" = "w_hw_hour_ado",
+    "Internet access - 1 hour browsing" = "internet_browse_hour",
+    "Internet access - 1 hour video" = "internet_video_hour",
+    "IT infrastructure" = "it_infrastructure",
+    "IT infrastructure, per user" = "it_infrastructure_user",
+    "Lithium carbonate, per 300mg" = "lithium_carbonate_300mg",                      
+    "Materials printing" = "printing_unit",                  
+    "Medical officer salary, per hour" = "w_med_officer_hour",                            
+    "Medical specialist salary, per hour" = "w_med_specialist_hour",      
+    "Registered nurse salary, per hour" = "w_rn_hour",
+    "Serum creatinine test" = "test_creatine",              
+    "Serum electrolytes test" = "test_electrolytes",                       
+    "Serum lithium test" = "test_lithium",                  
+    "Serum prolactin test" = "test_prolactin",
+    "Teacher salary, per hour" = "w_teacher_hour",                  
+    "Teacher salary, per hour (per student)" = "w_teacher_hour_ado",
+    "Thyroid function test" = "test_thyroid"))
+
+inter_costs$unit_cost_all <- ifelse(inter_costs$traded == "Traded",
+                                    inter_costs$unit_cost_traded,
+                                    inter_costs$unit_cost_non_traded)
+
+inter_costs <- subset(inter_costs, !is.na(unit_cost_all) & country %in% our_countries)
+
+# get the expected counts of each item
+inter_counts <- reshape2::melt(inter_counts, id.vars = 1, na.rm = T, value.name = "unit_count")
+inter_counts$year <- ifelse(grepl("1", inter_counts$variable), "year_other", "year_1") # yes, this is correct; the colummn names are in the spreadsheet, so the "1" shows the duplicate/subsequent year
+
+inter_counts$variable <- gsub(" 1", "", gsub("\\.", " ", inter_counts$variable))
+
+inter_counts$item_label <- revalue(inter_counts$variable,
+  c("Teacher" = "w_teacher_hour",
+    "Health worker" = "w_hw_hour",
+    "Medical officer" = "w_med_officer_hour",
+    "Medical specialist" = "w_med_specialist_hour",
+    "Infrastructure" = "it_infrastructure",
+    "Computer" = "computer",
+    "Internet browsing" = "internet_browsing_hour",
+    "Internet video call" = "internet_video_hour",
+    "Haloperidol" = "haloperidol_1.5mg",
+    "Lithium carbonate" = "lithium_carbonate_300mg",
+    "Fluoxetine" = "fluoxetine_20mg",
+    "Serum lithium test" = "test_lithium",
+    "Serum prolactin test" = "test_prolactin",
+    "Serum electrolytes test" = "test_electrolytes",
+    "Serum creatine test" = "test_creatine",
+    "Thyroid function test" = "test_thyroid",
+    "Booklet" = "printing_unit"))
+
+inter_tot <- merge(inter_costs[, c("country", "item_label", "unit_cost_all")], 
+                   inter_counts, by = "item_label")
+inter_tot$c_inter_month <- inter_tot$unit_cost_all * inter_tot$unit_count
+inter_tot <- aggregate(c_inter_month ~ year + country + Name, inter_tot, FUN = sum)
+```
+
+```{r combine_pop_and_prev}
+unpd <- rename(unpd, c("Location" = "country",
+                       "AgeGrp" = "age_at_start",
+                       "Sex" = "sex",
+                       "n_pop" = "n_pop"))
+unpd$five_year_age_group <- ifelse(unpd$age_at_start < 15, "10 to 14", "15 to 19")
+
+prev_start <- data.table(prev_start)
+prev_start <- rename(prev_start, c("location_name" = "country",
+                                   "sex_name" = "sex",
+                                   "age_name" = "five_year_age_group"))
+
+starting_data <- merge(unpd, prev_start, all = FALSE, by = intersect(names(unpd), names(prev_start)))
+starting_data$country_sex_age <- paste(starting_data$country,
+                                       starting_data$sex,
+                                       starting_data$age_at_start,
+                                       sep = "_")
+starting_data <- as.data.frame(starting_data)
+
+# get starting numbers
+dx <- c("anxiety", "bipolar", "depression")
+starting_data[, paste0("n_", dx)] <- 
+  starting_data[, paste0("prev_", dx)] * starting_data$n_pop
+
+# pull in Internet access, scholarization rates, GDP per capita, expected wage by education level,
+# and intervention costs
+starting_data <- merge(starting_data, 
+                       school_bycountry[, c("country", "sex", "Pr_in_school")])
+starting_data <- merge(starting_data, internet[, c("country", "Pr_access_internet")])
+starting_data <- merge(starting_data, gdp_per_cap[, c("country", "gdp_per_cap_2019_monthly")])
+starting_data <- merge(starting_data, exp_w_by_edu)
+
+afghan <- as.data.frame(subset(starting_data, country == "Afghanistan"))
+usa <- as.data.frame(subset(starting_data, country == "United States of America"))
+
+tens <- as.data.frame(subset(starting_data, age_at_start == 15 & sex == "Male"))
+tens <- subset(tens, country %in% c("Algeria", "Kenya", "Democratic Republic of the Congo",
+                                    "Iran", "Egypt", "Afghanistan", "France",
+                                    "Russian Federation", "United States", "Brazil",
+                                    "Thailand", "India", "Japan", "China", "Philippines"))  
+
+#dsa_names <- paste0("Model output files/DSA_20201113/",
+#                    list.files("Model output files/DSA_20201113"))
+#dsa_ids <- dsa_ids <- gsub("Model output files/DSA_20201113/DSA_20201113_|.csv", "", dsa_names)
+#starting_pop_data <- subset(starting_data, !(country_sex_age %in% dsa_ids))
+#starting_pop_data <- subset(starting_data, country != "Argentina")
+starting_pop_data <- rbind(usa[5, ])
+#starting_pop_data <- rbind(afghan[1, ])
+#starting_pop_data <- tens
+#starting_pop_data <- starting_data
+
+# for records, put all quoted data_frames into a file
+write.csv(starting_pop_data,
+           "Model definition files/AUTO GENERATED cleaned data frames/starting_pop_data.csv", 
+           row.names = FALSE)
+write.csv(starting_data,
+           "Model definition files/AUTO GENERATED cleaned data frames/starting_data.csv", 
+           row.names = FALSE)
+write.csv(life_table_w_suicide, 
+           "Model definition files/AUTO GENERATED cleaned data frames/life_table_w_suicide.csv",
+           row.names = FALSE)
+write.csv(inc, "Model definition files/AUTO GENERATED cleaned data frames/incidence.csv", 
+           row.names = FALSE)
+write.csv(school_bycountry, "Model definition files/AUTO GENERATED cleaned data frames/school_bycountry.csv", row.names = FALSE)
+write.csv(internet, "Model definition files/AUTO GENERATED cleaned data frames/internet.csv", row.names = FALSE)
+write.csv(gdp_per_cap, "Model definition files/AUTO GENERATED cleaned data frames/gdp_per_capita.csv", row.names = FALSE)
+write.csv(exp_w_by_edu, "Model definition files/AUTO GENERATED cleaned data frames/exp_w_by_edu.csv", row.names = FALSE)
+write.csv(pr_edu_and_emp_edu, "Model definition files/AUTO GENERATED cleaned data frames/pr_edu_and_emp_edu.csv", row.names = FALSE)
+write.csv(inter_costs, "Model definition files/AUTO GENERATED cleaned data frames/intervention_costs.csv", row.names = FALSE)
+write.csv(inter_tot, "Model definition files/AUTO GENERATED cleaned data frames/intervention_total_costs.csv",
+          row.names = FALSE)
+write.csv(days_lost, "Model definition files/AUTO GENERATED cleaned data frames/excess_days_lost_to_illness.csv", row.names = FALSE)
+write.csv(bg_morbidity, "Model definition files/AUTO GENERATED cleaned data frames/background_morbidity.csv", row.names = FALSE)
+write.csv(wb_and_who, "Model definition files/AUTO GENERATED cleaned data frames/wb_and_who_countries.csv",
+          row.names = FALSE)
+```
+
+```{r inter_tot_for_supp_file}
+inter_tot_wide <- reshape2::dcast(inter_tot, country + Name ~ year)
+
+inter_tot_wide <- rename(inter_tot_wide, c("country" = "Country",
+                                           "year_1" = "First year",
+                                           "year_other" = "Other years"))
+
+inter_tot_wide$Condition <- ifelse(grepl("anxdep", inter_tot_wide$Name), "Anxiety and depression",
+                            ifelse(grepl("anx", inter_tot_wide$Name), "Anxiety",
+                            ifelse(grepl("severe", inter_tot_wide$Name), "Severe depression",
+                            ifelse(grepl("depressed", inter_tot_wide$Name), "Bipolar, depression",
+                            ifelse(grepl("dep", inter_tot_wide$Name), "Mild depression",
+                            ifelse(grepl("manic", inter_tot_wide$Name), "Bipolar, mania",
+                            ifelse(grepl("euth", inter_tot_wide$Name), "Bipolar, euthymia", "Suicide")))))))
+
+inter_tot_wide$Intervention <- revalue(inter_tot_wide$Name,
+                                       c("anx_trt_cbt_group" = "In-person group CBT",
+                                         "anx_trt_cbt_internet_individual" = "Individual CBT delivered via internet platform",
+                                         "anx_trt_cbt_internet_self" = "Internet-based guided self help",
+                                         "anxdep_prevention_school" = "School-based prevention delivered by teachers",
+                                         "bip_trt_depressed" = "Family-focused treatment for adolescents, plus medication",
+                                         "bip_trt_euthymia" = "Family-focused treatment for adolescents, plus medication",
+                                         "bip_trt_manic" = "Family-focused treatment for adolescents, plus medication",
+                                         "dep_screening_school" = "Indicated prevention",
+                                         "dep_trt_mild_internet_self" = "Internet-based guided self help",
+                                         "dep_trt_mild_internet" = "Individual CBT delivered via internet platform",
+                                         "dep_trt_mild_group" = "In-person group CBT",
+                                         "dep_trt_severe" = "Medication and in-person individual CBT",
+                                         "suicide_prevention_school" = "Prevention in schools",
+                                         "suicide_prevention_hospital" = "Follow-up prevention in hospitals among those who have self-harmed"))
+
+#inter_tot_wide <- merge(wb_and_who, inter_tot_wide, by.x = "country", by.y = "Country")
+#inter_tot_wide$wb_income_level <- ordered(inter_tot_wide$wb_income_level, c("Low", "Lower middle", "Upper middle", #"High"))
+#inter_tot_wide <- aggregate(`Other years` ~ wb_income_level + Condition + Intervention, data = inter_tot_wide, mean)
+#inter_tot_wide$`Other years` <- dollar(inter_tot_wide$`Other years`)
+#
+#inter_tot_wide <- reshape2::dcast(inter_tot_wide, Condition + Intervention ~ wb_income_level)
+
+write.csv(inter_tot_wide, "Model definition files/AUTO GENERATED cleaned data frames/intervention_total_costs_wide.csv",
+          row.names = FALSE)
+```
+
+```{r done}
+beep("mario")
+```

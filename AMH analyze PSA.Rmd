@@ -1,0 +1,139 @@
+---
+title: "AMH analyze PSA"
+author: "Rachel Stelmach"
+date: "3/10/2022"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup}
+library(data.table)
+library(ggplot2)
+library(stringr)
+library(scales)
+
+psa_names <- list.files("Model output files/PSA output/Combined PSA output 20220324")
+psa_dat <- lapply(paste0("Model output files/PSA output/Combined PSA output 20220324/",
+                         psa_names), fread)
+psa_dat <- rbindlist(psa_dat)
+
+wb_and_who <- read.csv("Model definition files/AUTO GENERATED cleaned data frames/wb_and_who_countries.csv")
+
+wb_and_who$country <- paste0("'", wb_and_who$country, "'")
+
+psa_dat <- merge(wb_and_who, psa_dat)
+
+
+rti_blue <- "#002E5F"
+rti_gray <- "#999999"
+rti_lt_blue <- "#a8bad7"
+#
+#glm_res <- glm(data = psa_dat, roi ~ age_init + sex + country + discount_rate_annual + 
+#      Pr_anx_also_dep + RR_suicide_after_self_harm_ages_10_to_17)
+#
+#anova_res <- anova(glm_res)
+#
+#(anova_res$Deviance[-c(1:4)]) / sum((anova_res$Deviance[-c(1:4)]))
+#
+#mboot <- boot(psa_dat$roi[1:1000], function (x, i) median(x[i]), R = 1000)
+#mboot_ct <- boot.ci(mboot, conf = 0.95)
+```
+
+```{r summary}
+setDT(psa_dat)
+psa_dat[, age_init_round := floor(age_init)]
+
+summary_psa_dat <- psa_dat[, .(roi_p25 =  quantile(roi, 0.25), 
+                               roi_med = quantile(roi, 0.5),
+                               roi_p75 =  quantile(roi, 0.75),
+                               daly_p25 =  quantile(cost_per_daly_averted, 0.25), 
+                               daly_med = quantile(cost_per_daly_averted, 0.5),
+                               daly_p75 =  quantile(cost_per_daly_averted, 0.75)),
+        by = list(intervention, who_region_name, wb_income_level)]
+summary_psa_dat <- melt(summary_psa_dat, 
+                        id.vars = c("intervention", "who_region_name",
+                                    "wb_income_level"))
+summary_psa_dat[, c("outcome", "percentile") := tstrsplit(variable, "_")]
+summary_psa_dat <- dcast(summary_psa_dat,
+                         intervention + who_region_name + wb_income_level + outcome ~ percentile)
+summary_psa_dat$outcome <- ifelse(summary_psa_dat$outcome == "roi", "ROI",
+                                  "Cost per DALY averted")
+
+summary_psa_dat$wb_income_level <-
+  ordered(summary_psa_dat$wb_income_level,
+          c("Low", "Lower middle", "Upper middle", "High"))
+
+pdf("Model output files/Figures/PSA outcomes by intervention.pdf", 
+     width = 6.5, height = 9)
+ggplot(subset(summary_psa_dat, intervention == "all_interventions"), 
+       aes(x = wb_income_level, y = med, ymin = p25, ymax = p75)) +
+  geom_errorbar(size = 1, width = 0.1, color = rti_blue) +
+  geom_point(size = 2, color = rti_blue) +
+  ggtitle(str_wrap("Cost per daly averted and return on investment by World Bank income level and WHO region, PSA median and interquartile range: all interventions", 50)) +
+  labs(x = "World Bank country income level", y = "Value (2019 USD)") +
+  facet_grid(who_region_name ~ outcome, switch = "y") +
+  scale_y_continuous(labels = dollar) +
+  scale_x_discrete(labels = function (x) str_wrap(x, width = 10)) +
+  theme_bw() +
+  theme(strip.text.y.left = element_text(angle = 0),
+        strip.placement = "outside",
+        strip.background = element_rect(fill = rti_lt_blue))
+dev.off()
+```
+
+```{r table_output}
+table_psa_dat <- psa_dat[, .(
+  roi_p25 =  quantile(roi, 0.25), 
+  roi_med = quantile(roi, 0.5),
+  roi_p75 =  quantile(roi, 0.75), 
+  daly_p25 =  quantile(cost_per_daly_averted, 0.25), 
+  daly_med = quantile(cost_per_daly_averted, 0.5),
+  daly_p75 =  quantile(cost_per_daly_averted, 0.75)),
+        by = list(intervention, who_region_name, wb_income_level, sex)]
+table_psa_dat$sex <- gsub("'", "", table_psa_dat$sex)
+
+table_psa_dat[, grep("roi|daly", colnames(table_psa_dat), value = TRUE)] <-
+  table_psa_dat[, lapply(.SD, function (x) comma(accuracy = 0.01, x)), 
+              .SDcols = grep("roi|daly", colnames(table_psa_dat), value = TRUE)]
+
+table_psa_dat <- 
+  table_psa_dat[order(intervention, who_region_name, wb_income_level, sex), ]
+
+table_psa_dat$Intervention <- gsub(".*_", "", table_psa_dat$intervention)
+table_psa_dat$Intervention <- recode(table_psa_dat$Intervention,
+                            "interventions" = "All interventions",
+                            "group" = "Group CBT",
+                            "individual" = "Internet-based CBT",
+                            "self" = "Internet-based guided self help",
+                            "school" = "School-based prevention",
+                            "trt" = "CBT and medication",
+                            "severe" = "Medication and CBT",
+                            "hospital" = "Follow-up prevention in hospitals",
+                            "prevention" = "Indicated prevention")
+
+table_psa_dat$Condition <- gsub("_.*", "", table_psa_dat$intervention)
+table_psa_dat$Condition <- ifelse(table_psa_dat$Intervention == "dep_severe_trt", "dep_sev", table_psa_dat$Condition)
+table_psa_dat$Condition <- ordered(table_psa_dat$Condition, c("anx", "anxdep", "dep", "dep_sev", "bip", "suicide", "no", "school", "all"))
+table_psa_dat$Condition <- recode(table_psa_dat$Condition,
+                         "all" = "All", 
+                         "anx" = "Anxiety",
+                         "anxdep" = "Anxiety and depression",
+                         "dep" = "Mild depression", 
+                         "dep_sev" = "Severe depression",
+                         "bip" = "Bipolar disorder",
+                         "suicide" = "Suicide",
+                         "school" = "All",
+                         "no" = "No")
+
+table_psa_dat <- setcolorder(table_psa_dat, 
+                             c("Condition", "Intervention", "who_region_name",
+                               "wb_income_level", "sex",
+                               grep("roi", names(table_psa_dat), value = TRUE),
+                               grep("daly", names(table_psa_dat), value = TRUE)))
+
+table_psa_dat[, intervention := NULL]
+
+write.csv(table_psa_dat, row.names = FALSE,
+          "Model output files/Supplemental file 5 PSA results.csv")
+```
